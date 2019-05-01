@@ -3,7 +3,7 @@
     <div class="flex-container-item">
       <main class="flex-container-item top-bar">
         <!-- TOP BAR -->
-        <klondike-stock></klondike-stock>
+        <klondike-stock (onNewCardClick)="onNewCardClicked()"></klondike-stock>
         <klondike-waste></klondike-waste>
 
         <klondike-foundation *ngFor="let suit of foundationsSuits" [suit]="suit">

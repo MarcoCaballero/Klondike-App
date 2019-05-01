@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Suit, ALL_SUITS } from 'src/app/model/suit';
-import { Rank, ALL_RANK } from 'src/app/model/rank';
+import { Rank, ALL_RANKS } from 'src/app/model/rank';
 import { Card } from 'src/app/model/card';
 
 interface TableauData {
@@ -16,7 +16,7 @@ interface TableauData {
 export class BoardComponent implements OnInit {
   readonly TABLEAUS_SIZE: number = 7;
   readonly foundationsSuits: Suit[] = ALL_SUITS;
-  readonly ranks: Rank[] = ALL_RANK;
+  readonly ranks: Rank[] = ALL_RANKS;
 
   deck: Card[];
   tableaus: TableauData[];
@@ -29,18 +29,29 @@ export class BoardComponent implements OnInit {
   ngOnInit() {
   }
 
+  onNewCardClicked(): void {
+    console.log(`Parent: listen click..`);
+  }
+
   private fillDeckWithCards(): void {
     this.deck = [];
 
     for (const suit of this.foundationsSuits) {
       for (const rank of this.ranks) {
-        let card: Card = new Card(rank, suit, true);
-        if (Math.random() > 0.5) {
-          this.deck.push(card);
-        } else {
-          this.deck.unshift(card);
-        }
+        this.deck.push(new Card(rank, suit));
       }
+    }
+
+    this.shuffle<Card>(this.deck);
+  }
+
+  private shuffle<T = any>(array: Array<T>): void {
+    for (let i = array.length - 1; i >= 0; i--) {
+      let item: T = array[i];
+      let randomIndex: number = Math.floor(Math.random() * (i + 1));
+
+      array[i] = array[randomIndex];
+      array[randomIndex] = item;
     }
   }
 

@@ -2,7 +2,8 @@
 (click)="onClick()">
   <mat-icon color="primary">autorenew</mat-icon>
   <klondike-card
-  *ngFor="let card of cards" 
+  *ngFor="let card of cards; index as i" 
+  [@slideToWaste]="isSlidingToWaste(i) ? 'on' : 'off'"
   [card]="card" 
   cdkDrag
   [cdkDragDisabled]="true"

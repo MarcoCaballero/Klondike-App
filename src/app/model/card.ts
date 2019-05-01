@@ -13,11 +13,11 @@ export class Card {
         this._visible = visible;
     }
 
-    showCard() {
+    show() {
         this.setVisibility(true);
     }
 
-    hideCard() {
+    hide() {
         this.setVisibility(false);
     }
 

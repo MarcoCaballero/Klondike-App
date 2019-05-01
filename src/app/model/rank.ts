@@ -14,7 +14,7 @@ export enum Rank {
     KING,
 }
 
-export const ALL_RANK: Rank[] = [
+export const ALL_RANKS: Rank[] = [
     Rank.ACE,
     Rank.TWO,
     Rank.THREE,

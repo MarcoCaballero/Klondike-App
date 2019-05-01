@@ -26,7 +26,7 @@ $warn: map-get($klondike-app-theme, klondike-app-warn);
   height: 90%;
 
   .top-bar-container {
-    height: 25%;
+    height: 21%;
 
     .top-bar {
       width: 100%;
@@ -81,21 +81,21 @@ $warn: map-get($klondike-app-theme, klondike-app-warn);
   @media screen and (min-height: 1200px),
   screen and (min-width: 2200px) {
     .main-board-container {
-      height: 75.6% !important;
+      height: 79.6% !important;
     }
   }
 
   @media screen and (min-height: 1000px),
   screen and (min-width: 1900px) {
     .main-board-container {
-      height: 74%;
+      height: 78%;
     }
   }
 
   @media screen and (min-height: 850px),
   screen and (min-width: 1200px) {
     .main-board-container {
-      height: 73%;
+      height: 77%;
     }
   }
 
@@ -103,7 +103,7 @@ $warn: map-get($klondike-app-theme, klondike-app-warn);
   screen and (max-width: 800px),
   screen and (min-width: 400px) {
     .main-board-container {
-      height: 72%;
+      height: 76%;
     }
   }
 
@@ -111,7 +111,7 @@ $warn: map-get($klondike-app-theme, klondike-app-warn);
   screen and (max-width: 1400px),
   screen and (min-width: 900px) {
     .main-board-container {
-      height: 75%;
+      height: 79%;
     }
   }
 }

@@ -14,8 +14,6 @@ export class TableauComponent implements OnInit {
   @Input()
   set cards(cards: Array<Card>) {
     this.tableau = new Tableau(cards);
-    
-    // console.log(`Set Tableau: ${JSON.stringify(this.tableau)}`);
   }
 
   get cards(): Array<Card> {

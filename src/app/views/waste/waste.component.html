@@ -1,0 +1,17 @@
+<div class="waste"
+cdkDropList
+cdkDropListSortingDisable
+#wasteDropList="cdkDropList"
+[cdkDropListData]="cards"
+[cdkDropListConnectedTo]="['foundation-diamonds-dropList', 'foundation-hearts-dropList', 'foundation-spades-dropList', 'foundation-clubs-dropList']"
+(cdkDropListDropped)="onDrop($event)">
+  <klondike-card
+  *ngFor="let card of cards; index as i" 
+  [card]="card" 
+  cdkDrag
+  cdkDragBoundary=".board-boundary" 
+  [cdkDragDisabled]="!((i+1) == cards.length)"
+  [cdkDragData]="card"
+  (cdkDragMoved)="onDragMove($event)"
+  (cdkDragReleased)="onDragReleased($event)"></klondike-card>
+</div>

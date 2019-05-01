@@ -1,0 +1,117 @@
+@import '../../../klondike-theme.scss';
+
+/* Variables */
+$primary: map-get($klondike-app-theme, klondike-app-primary);
+$accent: map-get($klondike-app-theme, klondike-app-accent);
+$warn: map-get($klondike-app-theme, klondike-app-warn);
+
+/* MIXINS */
+@mixin foundation-aligner {
+  @for $i from 1 through 4 {
+    &:nth-child(#{$i + 2}) {
+      right: percentage($number: ((($i - 1) * 15) + 3) / 100);
+    }
+  }
+}
+
+@mixin tableau-aligner {
+  @for $i from 1 through 7 {
+    &:nth-child(#{$i}) {
+      left: percentage($number: ((($i - 1) * 14) + 4) / 100);
+    }
+  }
+}
+
+.board-boundary {
+  height: 90%;
+
+  .top-bar-container {
+    height: 25%;
+
+    .top-bar {
+      width: 100%;
+      padding: 20px;
+      background-color: mat-color($klondike-app-board, darker);
+      overflow: overlay;
+
+      klondike-stock,
+      klondike-waste,
+      klondike-foundation {
+        position: absolute;
+      }
+
+      klondike-stock {
+        left: 2%;
+      }
+
+      klondike-waste {
+        left: 17%;
+      }
+
+      klondike-foundation {
+        @include foundation-aligner();
+      }
+    }
+  }
+
+  .main-board {
+    order: 2;
+    padding: 20px;
+    background-color: mat-color($klondike-app-board, lighter);
+    overflow: overlay;
+
+    klondike-tableau {
+      @include tableau-aligner();
+      position: absolute;
+    }
+
+    klondike-tableau {
+      height: 63%;
+      width: 75px;
+    }
+  }
+
+  footer {
+    background-color: mat-color($klondike-app-primary);
+    color: mat-color($mat-grey, 50);
+    font: 500 15px/20px Roboto, "Helvetica Neue", sans-serif;
+  }
+
+  /* RESPONSIVE MEDIA QUERIES */
+  @media screen and (min-height: 1200px),
+  screen and (min-width: 2200px) {
+    .main-board-container {
+      height: 75.6% !important;
+    }
+  }
+
+  @media screen and (min-height: 1000px),
+  screen and (min-width: 1900px) {
+    .main-board-container {
+      height: 74%;
+    }
+  }
+
+  @media screen and (min-height: 850px),
+  screen and (min-width: 1200px) {
+    .main-board-container {
+      height: 73%;
+    }
+  }
+
+  @media screen and (min-height: 700px),
+  screen and (max-width: 800px),
+  screen and (min-width: 400px) {
+    .main-board-container {
+      height: 72%;
+    }
+  }
+
+  @media screen and (min-height: 700px),
+  screen and (max-width: 1400px),
+  screen and (min-width: 900px) {
+    .main-board-container {
+      height: 75%;
+    }
+  }
+}

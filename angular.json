@@ -7,7 +7,7 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "app",
+      "prefix": "klondike",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
@@ -27,7 +27,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/klondike-theme.scss"
             ],
             "scripts": [],
             "es5BrowserSupport": true

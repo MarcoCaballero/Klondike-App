@@ -1,0 +1,28 @@
+.waste {
+  width: 75px;
+  height: 119px;
+
+  klondike-card {
+    position: absolute;
+
+    &:last-of-type {
+      z-index: 14;
+    }
+
+    &,
+    &:nth-last-child(3) {
+      left: 0;
+      top: 5%;
+    }
+
+    &:nth-last-child(2) {
+      left: 27%;
+      top: 5%;
+    }
+
+    &:nth-last-child(1) {
+      left: 53%;
+      top: 5%;
+    }
+  }
+}

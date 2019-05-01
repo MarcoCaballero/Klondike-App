@@ -1,0 +1,13 @@
+@import '../../klondike-theme.scss';
+
+/* Variables */
+$primary: map-get($klondike-app-theme, klondike-app-primary);
+$accent: map-get($klondike-app-theme, klondike-app-accent);
+$warn: map-get($klondike-app-theme, klondike-app-warn);
+
+.timer {
+  position: absolute;
+  margin-top: 0.4%;
+  right: 3%;
+  font-size: medium;
+}

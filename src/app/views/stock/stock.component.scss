@@ -1,0 +1,32 @@
+@import '../../../klondike-theme.scss';
+
+/* Variables */
+$primary: map-get($klondike-app-theme, klondike-app-primary);
+$accent: map-get($klondike-app-theme, klondike-app-accent);
+$warn: map-get($klondike-app-theme, klondike-app-warn);
+
+.stock {
+  height: 115px;
+  width: 83px;
+  background-color: #f0ffff3d;
+  border-radius: 5%;
+
+  mat-icon {
+    position: absolute;
+    left: 37%;
+    top: 37%;
+    transform: scale(2);
+    -moz-transform: scale(2);
+    -webkit-transform: scale(2);
+  }
+}
+
+klondike-card {
+  position: absolute;
+  left: 8%;
+  top: 8%;
+
+  &:last-of-type {
+    z-index: 14;
+  }
+}

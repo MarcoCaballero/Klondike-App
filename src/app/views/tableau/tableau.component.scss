@@ -1,8 +1,29 @@
+@import '../../../klondike-theme.scss';
+
+/* Variables */
+$primary: map-get($klondike-app-theme, klondike-app-primary);
+$accent: map-get($klondike-app-theme, klondike-app-accent);
+$warn: map-get($klondike-app-theme, klondike-app-warn);
+
+@mixin cards-aligner {
+  @for $i from 1 through 25 {
+    &:nth-child(#{$i}) {
+      top: percentage($number: (($i - 1) * 5) / 100);
+    }
+  }
+}
+
 .tableau {
   height: 100%;
   width: 75px;
+
+  klondike-card {
+    position: absolute;
+
+    @include cards-aligner;
+  }
 }
 
-klondike-card {
-  position: absolute;
-}
+
+
+

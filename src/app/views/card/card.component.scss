@@ -1,6 +1,6 @@
 :host {
-  width: 75px;
-  height: 96px;
+  width: 65px;
+  height: 86px;
 
   transition: transform 300ms cubic-bezier(0, 0, 0.2, 1),
     left 300ms cubic-bezier(0, 0, 0.2, 1),
@@ -16,7 +16,7 @@
 
   .card {
     position: absolute;
-    width: 75px;
-    height: 96px;
+    width: 65px;
+    height: 86px;
   }
 }

@@ -34,7 +34,7 @@ export class BoardComponent implements OnInit {
 
     for (const suit of this.foundationsSuits) {
       for (const rank of this.ranks) {
-        let card: Card = new Card(rank, suit);
+        let card: Card = new Card(rank, suit, true);
         if (Math.random() > 0.5) {
           this.deck.push(card);
         } else {

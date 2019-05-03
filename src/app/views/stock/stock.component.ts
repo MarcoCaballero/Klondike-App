@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Renderer2, Output, EventEmitter, HostListener, Input } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
@@ -6,6 +6,7 @@ import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { Card } from 'src/app/model/card';
 import { Rank } from 'src/app/model/rank';
 import { Suit } from 'src/app/model/suit';
+import { Stock } from 'src/app/model/stock';
 
 @Component({
   selector: 'klondike-stock',
@@ -13,10 +14,9 @@ import { Suit } from 'src/app/model/suit';
   styleUrls: ['./stock.component.scss'],
   animations: [
     trigger('slideToWaste', [
-      // ...
       state('on', style({
         position: 'absolute',
-        left: '192px',
+        left: `${(window.innerWidth / 4) - 100}px`,
         top: '5.6%',
         'z-index': '15'
       })),
@@ -26,54 +26,65 @@ import { Suit } from 'src/app/model/suit';
         top: '8%'
       })),
       transition('on => off', [
-        animate('0.5s')
+        animate('500ms cubic-bezier(0.35, 0, 0.25, 1)')
       ]),
       transition('off => on', [
-        animate('1s')
+        animate('1s cubic-bezier(0, 0, 0.25, 1)')
       ]),
     ]),
   ],
 })
 export class StockComponent implements OnInit {
-  @Output('onNewCardClick') newCardClicked = new EventEmitter<Card>();
-  slideToWaste: boolean = false;
+  @Output('onNewCardClick') newCardClicked: EventEmitter<Card> = new EventEmitter();
+  @Output('onEmptyStockClick') emptyStockClicked: EventEmitter<boolean> = new EventEmitter();
 
-  cards: Card[] = [
-    new Card(Rank.ACE, Suit.CLUBS),
-    new Card(Rank.TWO, Suit.HEARTS),
-    new Card(Rank.THREE, Suit.SPADES),
-    new Card(Rank.FIVE, Suit.DIAMONDS)
-  ];
+  _slideToWaste: boolean = false;
+  _stock: Stock;
 
-  constructor(private renderer: Renderer2) { }
+  @Input()
+  set stock(stock: Stock) {
+    this._stock = stock;
+  }
+
+  get cards(): Card[] {
+    return this._stock.getCards();
+  }
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
   onDragEnd(event: CdkDragEnd<Card>): void {
-    console.log(`onDragEnd: ${JSON.stringify(event.source.data)}`);
     event.source.reset();
   }
 
-  onClick() {
-    this.getTopCard().show();
-    /* Emit event,
-    * we need to change cards owner to the appComponent 
-    * to make able to distribute cards without cdkDragDrop API
-    */
-    this.newCardClicked.emit(this.getTopCard());
-    this.slideToWaste = true;
-    setTimeout(() => {
-      this.getTopCard().show();
-    }, 500);
-    setTimeout(() => {
-      this.slideToWaste = false;
-      this.getTopCard().hide();
-    }, 2000);
+  onCardClick(card: Card): void {
+    this.triggerMoveCardToWasteAnimation();
+  }
+
+  onIconClick() {
+    this.emptyStockClicked.emit(true);
   }
 
   isSlidingToWaste(i: number) {
-    return this.slideToWaste && (i >= (this.cards.length - 1))
+    return this._slideToWaste && (i >= (this.cards.length - 1))
+  }
+
+  private isSlidingOFF() {
+    return !this._slideToWaste;
+  }
+
+  private triggerMoveCardToWasteAnimation(): void {
+    if (this.isSlidingOFF()) {
+      this._slideToWaste = true;
+      this.getTopCard().show();
+      setTimeout(() => {
+        this.newCardClicked.emit(this.cards.pop());
+        this._slideToWaste = false;
+      }, 1000);
+    }
   }
 
   private getTopCard(): Card {

@@ -1,10 +1,11 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, Input } from '@angular/core';
 import { CdkDragEnd, CdkDragDrop, transferArrayItem, CdkDragRelease, DropListRef, CdkDragMove } from '@angular/cdk/drag-drop';
 
 import { Card } from 'src/app/model/card';
 import { Rank } from 'src/app/model/rank';
 import { Suit } from 'src/app/model/suit';
 import { DragDropService } from 'src/app/services/ui-utils/drag-drop.service';
+import { Waste } from 'src/app/model/waste';
 
 let visible = (v: boolean): boolean => v;
 
@@ -17,14 +18,16 @@ let visible = (v: boolean): boolean => v;
 export class WasteComponent implements OnInit {
 
   private _currentDragPos: WebKitPoint;
+  _waste: Waste;
 
-  private cards: Card[] = [
-    new Card(Rank.ACE, Suit.CLUBS, visible(true)),
-    new Card(Rank.TWO, Suit.HEARTS, visible(true)),
-    new Card(Rank.THREE, Suit.SPADES, visible(true)),
-    new Card(Rank.FIVE, Suit.DIAMONDS, visible(true))
-  ];
+  @Input()
+  set waste(waste: Waste) {
+    this._waste = waste;
+  }
 
+  get cards(): Card[] {
+    return this._waste.cards;
+  }
   // Automagically injects the dependency.
   constructor(private dragDropService: DragDropService) {
   }

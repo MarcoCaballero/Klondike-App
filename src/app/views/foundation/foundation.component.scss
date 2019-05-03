@@ -17,11 +17,6 @@ $warn: map-get($klondike-app-theme, klondike-app-warn);
     top: 39%;
     left: 35%;
     transform: scale(2);
-    
-    &:hover {
-      fill: mat-color($klondike-app-accent, lighter);
-      -webkit-text-fill-color: mat-color($klondike-app-accent, lighter);
-    }
   }
 
   klondike-card {

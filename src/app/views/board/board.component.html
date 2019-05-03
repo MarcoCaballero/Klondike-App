@@ -3,10 +3,10 @@
     <div class="flex-container-item">
       <main class="flex-container-item top-bar">
         <!-- TOP BAR -->
-        <klondike-stock (onNewCardClick)="onNewCardClicked()"></klondike-stock>
-        <klondike-waste></klondike-waste>
+        <klondike-stock (onNewCardClick)="onNewCardClicked($event)" (onEmptyStockClick)="onEmptyStockClicked()" [stock]="stock"></klondike-stock>
+        <klondike-waste [waste]="waste"></klondike-waste>
 
-        <klondike-foundation *ngFor="let suit of foundationsSuits" [suit]="suit">
+        <klondike-foundation *ngFor="let suit of ALL_SUITS" [suit]="suit">
         </klondike-foundation>
         <!-- ./TOP BAR -->
       </main>
@@ -17,7 +17,7 @@
       <main class="flex-container-item main-board">
         <!-- MAIN BOARD -->
 
-        <klondike-tableau *ngFor="let tableau of tableaus" [cards]="tableau.cards"></klondike-tableau>
+        <klondike-tableau *ngFor="let tableau of tableaus" [tableau]="tableau"></klondike-tableau>
 
         <!--./ MAIN BOARD -->
       </main>

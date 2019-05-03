@@ -8,30 +8,34 @@ export class Tableau {
     }
 
     isCardAdditionAllowed(card: Card): boolean {
-        return (this.head().isRed()) ? !card.isRed(): card.isRed();
+        return (this.head().isRed()) ? !card.isRed() : card.isRed();
     }
 
     addCard(card: Card): void {
-        this._cards.push(card);
-    }
-
-    removeHead(): void {
-        this._cards.pop();
+        this._cards.unshift(card);
     }
 
     size(): number {
         return this._cards.length;
     }
 
-    getCards(): Array<Card> {
-        return this._cards;
-    }
-
     head(): Card {
-        return this._cards[this._cards.length - 1];
+        return this._cards[0];
     }
 
     tail(): Card {
-        return this._cards[0];
+        return this._cards[this._cards.length - 1];
+    }
+
+    shift(): Card {
+        return this._cards.shift();
+    }
+
+    pop(): Card {
+        return this._cards.pop();
+    }
+
+    getCards(): Array<Card> {
+        return this._cards;
     }
 }

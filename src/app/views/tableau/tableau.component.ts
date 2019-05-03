@@ -9,15 +9,15 @@ import { Card } from 'src/app/model/card';
 })
 export class TableauComponent implements OnInit {
 
-  private tableau: Tableau;
+  private tableau_: Tableau;
 
   @Input()
-  set cards(cards: Array<Card>) {
-    this.tableau = new Tableau(cards);
+  set tableau(tableau: Tableau) {
+    this.tableau_ = tableau;
   }
 
   get cards(): Array<Card> {
-    return this.tableau.getCards();
+    return this.tableau_.getCards();
   }
 
   constructor() { }

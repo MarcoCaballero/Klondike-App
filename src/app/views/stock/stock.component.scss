@@ -18,6 +18,11 @@ $warn: map-get($klondike-app-theme, klondike-app-warn);
     transform: scale(2);
     -moz-transform: scale(2);
     -webkit-transform: scale(2);
+
+    &:hover {
+      fill: mat-color($klondike-app-accent, lighter);
+      -webkit-text-fill-color: mat-color($klondike-app-accent, lighter);
+    }
   }
 }
 

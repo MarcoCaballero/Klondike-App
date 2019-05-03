@@ -1,13 +1,8 @@
-<div class="stock"
-(click)="onClick()">
-  <mat-icon color="primary">autorenew</mat-icon>
+<div class="stock">
+  <mat-icon color="primary" (click)="onIconClick()">autorenew</mat-icon>
   <klondike-card
   *ngFor="let card of cards; index as i" 
   [@slideToWaste]="isSlidingToWaste(i) ? 'on' : 'off'"
-  [card]="card" 
-  cdkDrag
-  [cdkDragDisabled]="true"
-  cdkDragBoundary=".board-boundary" 
-  [cdkDragData]="card"
-  (cdkDragEnded)="onDragEnd($event)"></klondike-card>
+  [card]="card"
+  (click)="onCardClick(card)"></klondike-card>
 </div>

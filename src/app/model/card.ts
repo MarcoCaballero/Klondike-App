@@ -13,6 +13,12 @@ export class Card {
         this._visible = visible;
     }
 
+    get rank(): Rank { return this._rank; }
+
+    get suit(): Suit { return this._suit; }
+
+    get visible(): boolean { return this._visible; }
+
     show() {
         this.setVisibility(true);
     }
@@ -23,18 +29,6 @@ export class Card {
 
     isRed(): boolean {
         return (this._suit === Suit.DIAMONDS || this._suit === Suit.HEARTS);
-    }
-
-    get rank(): Rank {
-        return this._rank;
-    }
-
-    get suit(): Suit {
-        return this._suit;
-    }
-
-    get visible(): boolean {
-        return this._visible;
     }
 
     private setVisibility(visible: boolean) {

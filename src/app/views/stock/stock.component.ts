@@ -1,11 +1,9 @@
-import { Component, OnInit, Renderer2, Output, EventEmitter, HostListener, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
 
 import { Card } from 'src/app/model/card';
-import { Rank } from 'src/app/model/rank';
-import { Suit } from 'src/app/model/suit';
 import { Stock } from 'src/app/model/stock';
 
 @Component({
@@ -34,12 +32,15 @@ import { Stock } from 'src/app/model/stock';
     ]),
   ],
 })
-export class StockComponent implements OnInit {
-  @Output('onNewCardClick') newCardClicked: EventEmitter<Card> = new EventEmitter();
+export class StockComponent {
+  @Output('onNewCardClick') newCardClicked: EventEmitter<boolean> = new EventEmitter();
   @Output('onEmptyStockClick') emptyStockClicked: EventEmitter<boolean> = new EventEmitter();
 
   _slideToWaste: boolean = false;
   _stock: Stock;
+
+  constructor() {
+  }
 
   @Input()
   set stock(stock: Stock) {
@@ -49,19 +50,15 @@ export class StockComponent implements OnInit {
   get cards(): Card[] {
     return this._stock.getCards();
   }
-
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
+  
   onDragEnd(event: CdkDragEnd<Card>): void {
     event.source.reset();
   }
 
-  onCardClick(card: Card): void {
-    this.triggerMoveCardToWasteAnimation();
+  onCardClick(): void {
+    if (this.isSlidingOFF()) {
+      this.triggerMoveCardToWasteAnimation();
+    }
   }
 
   onIconClick() {
@@ -77,17 +74,15 @@ export class StockComponent implements OnInit {
   }
 
   private triggerMoveCardToWasteAnimation(): void {
-    if (this.isSlidingOFF()) {
-      this._slideToWaste = true;
-      this.getTopCard().show();
-      setTimeout(() => {
-        this.newCardClicked.emit(this.cards.pop());
-        this._slideToWaste = false;
-      }, 1000);
-    }
+    this._slideToWaste = true;
+    this.getTopCard().show();
+    setTimeout(() => {
+      this.newCardClicked.emit(true);
+      this._slideToWaste = false;
+    }, 1000);
   }
 
   private getTopCard(): Card {
-    return this.cards[this.cards.length - 1];
+    return this._stock.tail();
   }
 }

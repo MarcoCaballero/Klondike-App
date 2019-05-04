@@ -40,11 +40,12 @@ export class WasteComponent implements OnInit {
   }
 
   onDragReleased(event: CdkDragRelease<Card>): void {
-    console.log(`Now: ${JSON.stringify(this._currentDragPos)}`);
+    console.log(`Released!`);
     this.dragDropService.fixDropAnimation(event.source._dragRef, this._currentDragPos);
   }
 
   onDrop(event: CdkDragDrop<Card[]>): void {
-    event.item.reset();
+    console.log(`Dropped!`);
+    // event.item.reset();
   }
 }

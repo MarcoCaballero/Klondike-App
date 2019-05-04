@@ -1,10 +1,8 @@
-import { Component, OnInit, Input, Renderer2 } from '@angular/core';
-
-import { Suit } from '../../model/suit';
+import { CdkDragDrop, CdkDragEnd } from '@angular/cdk/drag-drop';
+import { Component, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
 import { Card } from 'src/app/model/card';
-import { Rank } from 'src/app/model/rank';
-import { MatCardSmImage } from '@angular/material';
-import { CdkDragEnd, CdkDragDrop, transferArrayItem, CdkDragEnter, CdkDragRelease } from '@angular/cdk/drag-drop';
+import { Foundation } from 'src/app/model/foundation';
+import { Suit } from 'src/app/model/suit';
 
 @Component({
   selector: 'klondike-foundation',
@@ -12,48 +10,70 @@ import { CdkDragEnd, CdkDragDrop, transferArrayItem, CdkDragEnter, CdkDragReleas
   styleUrls: ['./foundation.component.scss']
 })
 export class FoundationComponent implements OnInit {
+  @Output('onCardPush') onCardPushed: EventEmitter<Suit> = new EventEmitter();
   readonly IMAGE_BASE_NAMESPACE: string = 'klondike-assets'
 
-  @Input() suit: Suit;
-  private cards: Card[] = [];
-  private isPointerOverThisContainer: boolean;
-  imageFullPath: string;
+  private _foundation: Foundation;
 
+  constructor(private renderer: Renderer2) {
+  }
 
-  constructor(private renderer: Renderer2) { }
+  @Input()
+  set foundation(foundation: Foundation) {
+    this._foundation = foundation;
+  }
+
+  get foundation(): Foundation {
+    return this._foundation;
+  }
+
+  get cards(): Card[] {
+    return this._foundation.cards;
+  }
+
+  get suit(): Suit {
+    return this._foundation.suit;
+  }
 
   ngOnInit() {
-    console.log(`Input: ${this.suit}`);
-    this.imageFullPath = this.getImageFromSuit();
+    this.cards.forEach(card => {
+      console.log(`Card: ${JSON.stringify(card)}`);
+    });
+  }
+
+  onCardClick(card: Card) {
+    console.log(`Card clicked: ${JSON.stringify(card)}`);
   }
 
   onDragStart(event: CdkDragEnd<Card>): void {
-    console.log(`onDragStart: ${JSON.stringify(event.source.data)}`);
     this.renderer.addClass(event.source.element.nativeElement, 'max-z-index');
   }
 
   onDragEnd(event: CdkDragEnd<Card>): void {
-    console.log(`onDragEnd: ${JSON.stringify(event.source.data)}`);
     this.renderer.removeClass(event.source.element.nativeElement, 'max-z-index');
   }
 
-  onDragReleased(event: CdkDragRelease<Card>): void {
-    console.log(`Released`);
-    // let source: any = event.source._dragRef;
-  }
-
   onDrop(event: CdkDragDrop<Card[]>) {
-    if (!event.isPointerOverContainer || event.previousContainer === event.container) {
-      event.item.reset();
+    console.log(`DROP`);
+    let cardToMove: Card = event.item.data;
+    if (this.isAllowedPushUI(event) && this.isAllowedPush(cardToMove)) {
+      this.onCardPushed.emit(cardToMove.suit);
     } else {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        this.cards.length);
+      event.item.reset();
     }
   }
 
-  private getImageFromSuit(): string {
-    return `${this.IMAGE_BASE_NAMESPACE}:${this.suit}`;
+  getImageFromSuit(): string {
+    return `${this.IMAGE_BASE_NAMESPACE}:${this._foundation.suit}`;
+  }
+
+  private isAllowedPush(card): boolean {
+    console.log(`Is allowed: ${this._foundation.isAllowedPush(card)}`);
+    return this._foundation.isAllowedPush(card);
+  }
+
+  private isAllowedPushUI(event: CdkDragDrop<Card[]>) {
+    console.log(`Is allowed UI: ${event.isPointerOverContainer || event.previousContainer !== event.container}`);
+    return event.isPointerOverContainer || event.previousContainer !== event.container;
   }
 }

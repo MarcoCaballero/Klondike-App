@@ -32,12 +32,17 @@ export class Stock {
     size(): number {
         return this._cards.length;
     }
+
     head(): Card {
         return this._cards[0];
     }
 
+    tail() : Card {
+        return this._cards[this._cards.length - 1];
+    }
+
     push(card: Card): void {
-        this._cards.unshift(card);
+        this._cards.push(card);
     }
 
     pop(): Card {

@@ -3,6 +3,12 @@
   <klondike-card
   *ngFor="let card of cards; index as i" 
   [@slideToWaste]="isSlidingToWaste(i) ? 'on' : 'off'"
+  [card]="card" 
+  cdkDrag
+  [cdkDragDisabled]="true"
+  cdkDragBoundary=".board-boundary" 
+  [cdkDragData]="card"
+  (cdkDragEnded)="onDragEnd($event)"
   [card]="card"
   (click)="onCardClick(card)"></klondike-card>
 </div>

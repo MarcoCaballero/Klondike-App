@@ -4,15 +4,15 @@ cdkDropList
 cdkDropListSortingDisabled
 [cdkDropListData]="cards"
 (cdkDropListDropped)="onDrop($event)">
-  <mat-icon svgIcon="{{imageFullPath}}"></mat-icon>
+  <mat-icon svgIcon="{{getImageFromSuit()}}"></mat-icon>
   <klondike-card 
    *ngFor="let card of cards" 
    [card]="card" 
    cdkDrag
    cdkDragBoundary=".board-boundary" 
    [cdkDragData]="card"
+   (click)="onCardClick(card)"
    (cdkDragEnded)="onDragEnd($event)"
-   (cdkDragReleased)="onDragReleased($event)"
    (cdkDragStarted)="onDragStart($event)">
   </klondike-card>
 </div>

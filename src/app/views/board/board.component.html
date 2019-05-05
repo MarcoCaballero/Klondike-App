@@ -3,10 +3,10 @@
     <div class="flex-container-item">
       <main class="flex-container-item top-bar">
         <!-- TOP BAR -->
-        <klondike-stock (onNewCardClick)="onNewCardClicked()" (onEmptyStockClick)="onEmptyStockClicked()" [stock]="stock"></klondike-stock>
+        <klondike-stock (newCardClick)="onNewCardClicked()" (emptyStockClick)="onEmptyStockClicked()" [stock]="stock"></klondike-stock>
         <klondike-waste [waste]="waste"></klondike-waste>
 
-        <klondike-foundation *ngFor="let foundation of foundations" (onCardPush)="onCardPushed($event)" [foundation]="foundation">
+        <klondike-foundation *ngFor="let foundation of foundations" (cardPush)="onCardPushed($event)" [foundation]="foundation">
         </klondike-foundation>
         <!-- ./TOP BAR -->
       </main>

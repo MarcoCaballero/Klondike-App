@@ -10,7 +10,7 @@ import { Suit } from 'src/app/model/suit';
   styleUrls: ['./foundation.component.scss']
 })
 export class FoundationComponent implements OnInit {
-  @Output('onCardPush') onCardPushed: EventEmitter<Suit> = new EventEmitter();
+  @Output() cardPush: EventEmitter<CdkDragDrop<Card[]>> = new EventEmitter();
   readonly IMAGE_BASE_NAMESPACE: string = 'klondike-assets'
 
   private _foundation: Foundation;
@@ -41,23 +41,10 @@ export class FoundationComponent implements OnInit {
     });
   }
 
-  onCardClick(card: Card) {
-    console.log(`Card clicked: ${JSON.stringify(card)}`);
-  }
-
-  onDragStart(event: CdkDragEnd<Card>): void {
-    this.renderer.addClass(event.source.element.nativeElement, 'max-z-index');
-  }
-
-  onDragEnd(event: CdkDragEnd<Card>): void {
-    this.renderer.removeClass(event.source.element.nativeElement, 'max-z-index');
-  }
-
   onDrop(event: CdkDragDrop<Card[]>) {
-    console.log(`DROP`);
     let cardToMove: Card = event.item.data;
     if (this.isAllowedPushUI(event) && this.isAllowedPush(cardToMove)) {
-      this.onCardPushed.emit(cardToMove.suit);
+      this.cardPush.emit(event);
     } else {
       event.item.reset();
     }
@@ -68,12 +55,10 @@ export class FoundationComponent implements OnInit {
   }
 
   private isAllowedPush(card): boolean {
-    console.log(`Is allowed: ${this._foundation.isAllowedPush(card)}`);
     return this._foundation.isAllowedPush(card);
   }
 
   private isAllowedPushUI(event: CdkDragDrop<Card[]>) {
-    console.log(`Is allowed UI: ${event.isPointerOverContainer || event.previousContainer !== event.container}`);
-    return event.isPointerOverContainer || event.previousContainer !== event.container;
+    return event.isPointerOverContainer && event.previousContainer !== event.container;
   }
 }

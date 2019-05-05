@@ -1,7 +1,7 @@
 <div class="waste"
 cdkDropList
 cdkDropListSortingDisable
-#wasteDropList="cdkDropList"
+id="wasteDropList"
 [cdkDropListData]="cards"
 [cdkDropListConnectedTo]="['foundation-diamonds-dropList', 'foundation-hearts-dropList', 'foundation-spades-dropList', 'foundation-clubs-dropList']"
 (cdkDropListDropped)="onDrop($event)">

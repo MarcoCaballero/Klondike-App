@@ -33,8 +33,8 @@ import { Stock } from 'src/app/model/stock';
   ],
 })
 export class StockComponent {
-  @Output('onNewCardClick') newCardClicked: EventEmitter<boolean> = new EventEmitter();
-  @Output('onEmptyStockClick') emptyStockClicked: EventEmitter<boolean> = new EventEmitter();
+  @Output() newCardClick: EventEmitter<boolean> = new EventEmitter();
+  @Output() emptyStockClick: EventEmitter<boolean> = new EventEmitter();
 
   _slideToWaste: boolean = false;
   _stock: Stock;
@@ -50,10 +50,6 @@ export class StockComponent {
   get cards(): Card[] {
     return this._stock.getCards();
   }
-  
-  onDragEnd(event: CdkDragEnd<Card>): void {
-    event.source.reset();
-  }
 
   onCardClick(): void {
     if (this.isSlidingOFF()) {
@@ -62,7 +58,7 @@ export class StockComponent {
   }
 
   onIconClick() {
-    this.emptyStockClicked.emit(true);
+    this.emptyStockClick.emit(true);
   }
 
   isSlidingToWaste(i: number) {
@@ -77,7 +73,7 @@ export class StockComponent {
     this._slideToWaste = true;
     this.getTopCard().show();
     setTimeout(() => {
-      this.newCardClicked.emit(true);
+      this.newCardClick.emit(true);
       this._slideToWaste = false;
     }, 1000);
   }

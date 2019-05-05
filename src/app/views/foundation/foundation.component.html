@@ -1,7 +1,7 @@
 <div class="foundation"
 id="foundation-{{suit}}-dropList"
 cdkDropList
-cdkDropListSortingDisabled
+cdkDropListSortingDisabled="true"
 [cdkDropListData]="cards"
 (cdkDropListDropped)="onDrop($event)">
   <mat-icon svgIcon="{{getImageFromSuit()}}"></mat-icon>
@@ -10,9 +10,6 @@ cdkDropListSortingDisabled
    [card]="card" 
    cdkDrag
    cdkDragBoundary=".board-boundary" 
-   [cdkDragData]="card"
-   (click)="onCardClick(card)"
-   (cdkDragEnded)="onDragEnd($event)"
-   (cdkDragStarted)="onDragStart($event)">
+   [cdkDragData]="card">
   </klondike-card>
 </div>

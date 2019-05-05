@@ -15,7 +15,7 @@ export class Waste {
         this._cards = cards;
     }
 
-    addCard(card: Card): void {
+    push(card: Card): void {
         this._cards.push(card);
     }
 

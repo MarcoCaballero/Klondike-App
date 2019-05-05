@@ -1,18 +1,26 @@
 import { Card } from './card';
 
 export class Tableau {
+    private _idx: number;
     private _cards: Array<Card>;
 
-    constructor(cards: Array<Card>) {
+    constructor(idx: number, cards: Array<Card>) {
+        this._idx = idx;
         this._cards = cards;
     }
+
+    get idx(): number { return this._idx; }
 
     isCardAdditionAllowed(card: Card): boolean {
         return (this.head().isRed()) ? !card.isRed() : card.isRed();
     }
 
-    addCard(card: Card): void {
-        this._cards.unshift(card);
+    push(card: Card): void {
+        this._cards.push(card);
+    }
+
+    empty(): boolean {
+        return this.size() === 0;
     }
 
     size(): number {

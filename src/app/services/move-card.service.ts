@@ -9,15 +9,19 @@ export class MoveCardService {
 
   constructor() { }
 
-  moveCardFromStockToWaste(board: Board) {
+  moveCardFromStockToWaste(board: Board): void {
     board.moveCardToWaste();
   }
 
-  moveAllCardFromWasteToStock(board: Board) {
+  moveAllCardFromWasteToStock(board: Board): void {
     board.restoreStockFromWaste();
   }
 
-  moveCardFromWasteToFoundation(board: Board, suit: Suit) {
-    board.moveCardToFoundation(board.popCurrentWasteCard(), suit);
+  moveCardFromTableauToFoundation(board: Board, tableauIdx: number, foundationSuit: Suit): void {
+    board.moveCardToFoundation(board.popCurrentTableauCard(tableauIdx), foundationSuit);
+  }
+
+  moveCardFromWasteToFoundation(board: Board, foundationSuit: Suit): void {
+    board.moveCardToFoundation(board.popCurrentWasteCard(), foundationSuit);
   }
 }

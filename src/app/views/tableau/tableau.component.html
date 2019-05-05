@@ -1,3 +1,16 @@
-<div class="tableau">
-  <klondike-card *ngFor="let card of cards" [card]="card"></klondike-card>
+<div class="tableau"
+id="tableau-{{idx}}-dropList"
+cdkDropList
+cdkDropListDisabled="false"
+[cdkDropListData]="cards"
+[cdkDropListConnectedTo]="['foundation-diamonds-dropList', 'foundation-hearts-dropList', 'foundation-spades-dropList', 'foundation-clubs-dropList']"
+(cdkDropListDropped)="onDrop($event)">
+  <klondike-card *ngFor="let card of cards"
+  [card]="card" 
+  cdkDrag
+  cdkDragBoundary=".board-boundary" 
+  [cdkDragData]="card"
+  [cdkDragDisabled]="!isEnableDrag(card)"
+  (click)="onCardClick(card)">
+  </klondike-card>
 </div>

@@ -43,9 +43,13 @@ export class Board {
         for (let i = 0; i < this.TABLEAUS_SIZE; i++) {
             let cards: Card[] = [];
             for (let j = 0; j <= i; j++) {
-                cards.push(this._stock.pop());
+                let card: Card = this._stock.pop();
+                if (j === i) {
+                    card.show();
+                }
+                cards.push(card);
             }
-            this._tableaus.push(new Tableau(cards));
+            this._tableaus.push(new Tableau((i + 1), cards));
         }
     }
 
@@ -53,12 +57,20 @@ export class Board {
         return this._waste.pop();
     }
 
+    popCurrentTableauCard(tableauIdx: number): Card {
+        let tableau: Tableau = this.getTableauByIdx(tableauIdx);
+        const poppedCard: Card =  tableau.pop();
+        if (!tableau.empty())
+            tableau.tail().show();
+        return poppedCard;
+    }
+
     moveCardToFoundation(card: Card, foundationSuit: Suit): void {
         this.getFoundationBySuit(foundationSuit).push(card);
     }
 
     moveCardToWaste(): void {
-        this._waste.addCard(this._stock.pop());
+        this._waste.push(this._stock.pop());
     }
 
     restoreStockFromWaste(): void {
@@ -71,5 +83,9 @@ export class Board {
 
     private getFoundationBySuit(suit: Suit): Foundation {
         return this._foundations.filter(foundation => foundation.suit === suit)[0];
+    }
+
+    private getTableauByIdx(idx: number): Tableau {
+        return this._tableaus.filter(tableau => tableau.idx === idx)[0];
     }
 }

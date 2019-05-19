@@ -69,6 +69,17 @@ export class Board {
         this.getFoundationBySuit(foundationSuit).push(card);
     }
 
+    moveCardToTableau(card: Card, tableauIdx: number): void {
+        let tableau: Tableau = this.getTableauByIdx(tableauIdx);
+        tableau.push(card);
+    }
+    moveCardsToTableau(cardList: Array<Card>, tableauIdx: number): void {
+        let tableau: Tableau = this.getTableauByIdx(tableauIdx);
+        while (cardList.length > 0){
+            tableau.push(cardList.pop());
+        }
+    }
+
     moveCardToWaste(): void {
         this._waste.push(this._stock.pop());
     }

@@ -1,11 +1,12 @@
 <div class="tableau"
 id="tableau-{{idx}}-dropList"
 cdkDropList
-cdkDropListDisabled="false"
+cdkDropListSortingDisabled="true"
 [cdkDropListData]="cards"
-[cdkDropListConnectedTo]="['foundation-diamonds-dropList', 'foundation-hearts-dropList', 'foundation-spades-dropList', 'foundation-clubs-dropList']"
+[cdkDropListConnectedTo]="['foundation-diamonds-dropList', 'foundation-hearts-dropList', 'foundation-spades-dropList', 'foundation-clubs-dropList', 'tableau-1-dropList', 'tableau-2-dropList', 'tableau-3-dropList', 'tableau-4-dropList', 'tableau-5-dropList', 'tableau-6-dropList', 'tableau-7-dropList' ]"
 (cdkDropListDropped)="onDrop($event)">
-  <klondike-card *ngFor="let card of cards"
+  <klondike-card 
+  *ngFor="let card of cards"
   [card]="card" 
   cdkDrag
   cdkDragBoundary=".board-boundary" 

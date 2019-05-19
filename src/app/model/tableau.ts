@@ -1,4 +1,6 @@
 import { Card } from './card';
+import { Rank } from './rank';
+
 
 export class Tableau {
     private _idx: number;
@@ -11,8 +13,9 @@ export class Tableau {
 
     get idx(): number { return this._idx; }
 
-    isCardAdditionAllowed(card: Card): boolean {
-        return (this.head().isRed()) ? !card.isRed() : card.isRed();
+    
+    isAllowedPush(card: Card): boolean {
+        return this.empty() || (this.hasAllowedRank(card) && this.isCardAdditionAllowed(card));
     }
 
     push(card: Card): void {
@@ -45,5 +48,14 @@ export class Tableau {
 
     getCards(): Array<Card> {
         return this._cards;
+    }
+    
+    private isCardAdditionAllowed(card: Card): boolean {
+        return (this.tail().isRed()) ? !card.isRed() : card.isRed();
+    }
+    private hasAllowedRank(card: Card) {
+        return  (this.empty()) ?
+            card.rank === Rank.ACE : ((this.tail().rank - card.rank) === 1);
+
     }
 }

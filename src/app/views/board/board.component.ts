@@ -48,16 +48,27 @@ export class BoardComponent implements OnInit {
   onCardPushed(event: CdkDragDrop<Card[]>): void {
     let cardToMove: Card = event.item.data;
     let previousContainerIdx: string = event.previousContainer.id;
-    if (this.isFromFoundation(previousContainerIdx)) {
-      let tableauIdx: number = this.getOriginFromDragListIdx(previousContainerIdx);
-      this._moveCardService.moveCardFromTableauToFoundation(this._board, tableauIdx, cardToMove.suit);
+    let destinationContainerIdx: string = event.container.id;
+    if (this.isTableau(previousContainerIdx)) {
+      let originTableauIdx: number = this.getOriginFromDragListIdx(previousContainerIdx);
+      if (this.isTableau(destinationContainerIdx)){
+        let destinationTableauIdx: number = this.getOriginFromDragListIdx(destinationContainerIdx);
+        this._moveCardService.moveCardFromTableauToTableau(this._board, originTableauIdx, destinationTableauIdx, cardToMove);
+      } else{  
+        this._moveCardService.moveCardFromTableauToFoundation(this._board, originTableauIdx, cardToMove.suit);
+      }
     } else { // Is from Waste
-      this._moveCardService.moveCardFromWasteToFoundation(this._board, cardToMove.suit);
+      if (this.isTableau(destinationContainerIdx)){
+        let tableauIdx: number = this.getOriginFromDragListIdx(destinationContainerIdx);
+        this._moveCardService.moveCardFromWasteToTableau(this._board, tableauIdx);
+      } else {
+        this._moveCardService.moveCardFromWasteToFoundation(this._board, cardToMove.suit);
+      }
     }
 
   }
 
-  private isFromFoundation(idx: string): boolean {
+  private isTableau(idx: string): boolean {
     return this.TABLEAU_REGEXP.test(idx);
   }
 

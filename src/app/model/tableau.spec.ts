@@ -29,24 +29,24 @@ describe('Tableau', () => {
         tableau.push(new Card(Rank.TWO, Suit.CLUBS, true));
         card1 = new Card(Rank.ACE, Suit.CLUBS, true);
         card2 = new Card(Rank.ACE, Suit.SPADES, true);
-        expect(tableau.isAllowedPush(card1)).toBeFalsy;
-        expect(tableau.isAllowedPush(card2)).toBeFalsy;
+        expect(tableau.isAllowedPush(card1)).toBeFalsy();
+        expect(tableau.isAllowedPush(card2)).toBeFalsy();
         });
     it('should only allow descendant ordered cards', () => {
         tableau.push(new Card(Rank.TWO, Suit.CLUBS, true));
         card1 = new Card(Rank.ACE, Suit.DIAMONDS, true);
         card2 = new Card(Rank.TWO, Suit.DIAMONDS, true);
         card3 = new Card(Rank.THREE, Suit.DIAMONDS, true);
-        expect(tableau.isAllowedPush(card3)).toBeFalsy;
-        expect(tableau.isAllowedPush(card2)).toBeFalsy;
-        expect(tableau.isAllowedPush(card1)).toBeTruthy;
+        expect(tableau.isAllowedPush(card3)).toBeFalsy();
+        expect(tableau.isAllowedPush(card2)).toBeFalsy();
+        expect(tableau.isAllowedPush(card1)).toBeTruthy();
         });
     it('should allow ordered cards with different color', () => {
         tableau.push(new Card(Rank.THREE, Suit.CLUBS, true));
         card1 = new Card(Rank.TWO, Suit.DIAMONDS, true);
         card2 = new Card(Rank.TWO, Suit.HEARTS, true);
-        expect(tableau.isAllowedPush(card1)).toBeFalsy;
-        expect(tableau.isAllowedPush(card2)).toBeFalsy;
+        expect(tableau.isAllowedPush(card1)).toBeTruthy();
+        expect(tableau.isAllowedPush(card2)).toBeTruthy();
         });
 });
 

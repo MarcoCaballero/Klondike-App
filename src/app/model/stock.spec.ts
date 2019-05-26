@@ -17,6 +17,6 @@ describe('Stock', () => {
 
   it('should have 52 cards after built', () => {
     stock.build();
-    expect(stock.size() === 52);
+    expect(stock.size() === 52).toBeTruthy();
   });
 });

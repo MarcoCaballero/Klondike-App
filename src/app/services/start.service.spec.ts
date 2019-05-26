@@ -23,19 +23,17 @@ describe('StartService', () => {
   });
   
   it('should build the stock and waste and shuffle stock', () => {
-    expect(board._stock).toBeTruthy;
-    expect(board._stock.size() > 0).toBeTruthy;
-    expect(board._stock.size() < 52).toBeTruthy;
+    expect(board._stock).toBeTruthy();
+    expect(board._stock.size() > 0).toBeTruthy();
+    expect(board._stock.size() < 52).toBeTruthy();
 
-    expect(board._waste).toBeTruthy;
-    expect(board._waste.empty()).toBeTruthy;
+    expect(board._waste).toBeTruthy();
+    expect(board._waste.empty()).toBeTruthy();
     });
 
   it('should deal to all the tableaus', () => { 
     for(let n = 0; n < board._tableaus.length; n++){
-      expect(board._tableaus[n].empty()).toBeFalsy; 
-      //redundant, remove second and keep first if it fails
-      expect(board._tableaus.length === n + 1).toBeTruthy;
+      expect(board._tableaus[n].empty()).toBeFalsy(); 
     }
     });
 
@@ -43,8 +41,7 @@ describe('StartService', () => {
     for(let n = 0; n < board._foundations.length; n++){
       for(let m = 0; m < board._foundations.length; m++){
         if (n!== m){
-          expect(board._foundations[n].suit !== board._foundations[n].suit).toBeTruthy;
-          expect(board._foundations[n].empty()).toBeTruthy;
+          expect(board._foundations[n].suit !== board._foundations[m].suit).toBeTruthy();
         }
       }
     }

@@ -1,9 +1,10 @@
-import { CdkDragDrop, CdkDragMove } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDragMove, CdkDragEnter, DragRef } from '@angular/cdk/drag-drop';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Card } from 'src/app/model/card';
 import { Tableau } from 'src/app/model/tableau';
 import { DragDropService } from 'src/app/services/ui-utils/drag-drop.service';
 import { BaseDragDropComponent } from '../base-drag-drop/base-drag-drop.component';
+import { element } from 'protractor';
 
 @Component({
   selector: 'klondike-tableau',
@@ -67,5 +68,16 @@ export class TableauComponent extends BaseDragDropComponent implements OnInit {
       children[i].style.left = `${(event.pointerPosition.x - 25)}px`;
       children[i].style.top = `${(event.pointerPosition.y - 30) - ((children.length - i) * 20)}px`;
     }
+  }
+
+  onDropListEntered(event: CdkDragEnter<Card>): void {
+   setTimeout(() => {
+    console.log(`Enter to: ${ JSON.stringify(event.container.data)}`);
+    let ref: any = event.container._dropListRef;
+    console.log(`Size of: ${ref._draggables.length}`);
+    ref._draggables.forEach((element: DragRef<Card>) => {
+      element.reset();
+    });
+   }, 1000);
   }
 }

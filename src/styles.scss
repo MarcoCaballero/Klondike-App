@@ -49,8 +49,10 @@ klondike-card {
 
 // Do Not Remove!! It fixes the non-sortable list animation effects.
 .cdk-drop-list-dragging klondike-card:not(.cdk-drag-placeholder),
+.cdk-drop-list-receiving klondike-card:not(.cdk-drag-placeholder),
+.cdk-drop-list-dragging klondike-card:not(.cdk-drag-placeholder),
 .cdk-drop-list-receiving klondike-card:not(.cdk-drag-placeholder) {
-  transform: translate3d(0px, 0px, 0px) !important;
+  transform: none !important;
 }
 
 // Do Not Remove!! It hides the drag placeholder (copy of card dragging).

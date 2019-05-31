@@ -1,7 +1,7 @@
 <div class="foundation"
 id="foundation-{{suit}}-dropList"
 cdkDropList
-cdkDropListSortingDisabled="true"
+cdkDropListSortingDisabled
 [cdkDropListData]="cards"
 (cdkDropListDropped)="onDrop($event)">
   <mat-icon svgIcon="{{getImageFromSuit()}}"></mat-icon>

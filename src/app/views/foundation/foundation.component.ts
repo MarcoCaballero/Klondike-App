@@ -1,4 +1,4 @@
-import { CdkDragDrop, CdkDragEnd } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
 import { Card } from 'src/app/model/card';
 import { Foundation } from 'src/app/model/foundation';

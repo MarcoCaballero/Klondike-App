@@ -1,11 +1,10 @@
-import { Component, OnInit, Renderer2, Input } from '@angular/core';
-import { CdkDragEnd, CdkDragDrop, transferArrayItem, CdkDragRelease, DropListRef, CdkDragMove } from '@angular/cdk/drag-drop';
-
+import { Component, Input, OnInit } from '@angular/core';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Card } from 'src/app/model/card';
-import { Rank } from 'src/app/model/rank';
-import { Suit } from 'src/app/model/suit';
-import { DragDropService } from 'src/app/services/ui-utils/drag-drop.service';
 import { Waste } from 'src/app/model/waste';
+import { DragDropService } from 'src/app/services/ui-utils/drag-drop.service';
+import { BaseDragDropComponent } from '../base-drag-drop/base-drag-drop.component';
+
 
 let visible = (v: boolean): boolean => v;
 
@@ -15,9 +14,8 @@ let visible = (v: boolean): boolean => v;
   styleUrls: ['./waste.component.scss']
 })
 
-export class WasteComponent implements OnInit {
+export class WasteComponent extends BaseDragDropComponent implements OnInit {
 
-  private _currentDragPos: WebKitPoint;
   _waste: Waste;
 
   @Input()
@@ -29,18 +27,11 @@ export class WasteComponent implements OnInit {
     return this._waste.cards;
   }
   // Automagically injects the dependency.
-  constructor(private dragDropService: DragDropService) {
+  constructor(public dragDropService: DragDropService) {
+    super(dragDropService);
   }
 
   ngOnInit(): void {
-  }
-
-  onDragMove(event: CdkDragMove<Card>): void {
-    this._currentDragPos = event.pointerPosition;
-  }
-
-  onDragReleased(event: CdkDragRelease<Card>): void {
-    this.dragDropService.fixDropAnimation(event.source._dragRef, this._currentDragPos);
   }
 
   onDrop(event: CdkDragDrop<Card[]>): void {

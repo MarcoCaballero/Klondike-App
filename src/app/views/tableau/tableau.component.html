@@ -1,7 +1,7 @@
 <div class="tableau"
 id="tableau-{{idx}}-dropList"
 cdkDropList
-cdkDropListSortingDisabled="true"
+cdkDropListSortingDisabled
 [cdkDropListData]="cards"
 [cdkDropListConnectedTo]="['foundation-diamonds-dropList', 'foundation-hearts-dropList', 'foundation-spades-dropList', 'foundation-clubs-dropList', 'tableau-1-dropList', 'tableau-2-dropList', 'tableau-3-dropList', 'tableau-4-dropList', 'tableau-5-dropList', 'tableau-6-dropList', 'tableau-7-dropList' ]"
 (cdkDropListDropped)="onDrop($event)">
@@ -12,6 +12,8 @@ cdkDropListSortingDisabled="true"
   cdkDragBoundary=".board-boundary" 
   [cdkDragData]="card"
   [cdkDragDisabled]="!isEnableDrag(card)"
+  (cdkDragMoved)="onDragMove($event)"
+  (cdkDragReleased)="onDragReleased($event)"
   (click)="onCardClick(card)">
   </klondike-card>
 </div>

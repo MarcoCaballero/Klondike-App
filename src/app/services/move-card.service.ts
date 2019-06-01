@@ -32,7 +32,6 @@ export class MoveCardService {
     do{
       _cardToMove = board.popCurrentTableauCard(tableauOriginIdx)
       _cardList.push(_cardToMove);
-      console.log(_cardToMove.show);
     }while(_cardToMove != cardToMove);
     board.moveCardsToTableau(_cardList, tableauDestinationIdx);
   }

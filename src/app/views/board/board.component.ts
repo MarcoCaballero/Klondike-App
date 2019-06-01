@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Board } from 'src/app/model/board';
 import { Foundation } from 'src/app/model/foundation';
 import { Stock } from 'src/app/model/stock';
@@ -36,15 +36,17 @@ export class BoardComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  @HostListener('onNewCardClicked')
   onNewCardClicked(): void {
     this._moveCardService.moveCardFromStockToWaste(this._board);
   }
 
+  @HostListener('onEmptyStockClicked')
   onEmptyStockClicked(): void {
     this._moveCardService.moveAllCardFromWasteToStock(this._board);
   }
 
+  @HostListener('onCardPushed')
   onCardPushed(event: CdkDragDrop<Card[]>): void {
     let cardToMove: Card = event.item.data;
     let previousContainerIdx: string = event.previousContainer.id;

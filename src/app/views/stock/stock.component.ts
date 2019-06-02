@@ -1,8 +1,5 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { trigger, state, style, animate, transition } from '@angular/animations';
-
-import { CdkDragEnd } from '@angular/cdk/drag-drop';
-
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Card } from 'src/app/model/card';
 import { Stock } from 'src/app/model/stock';
 

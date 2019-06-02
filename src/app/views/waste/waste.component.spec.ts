@@ -1,25 +1,27 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WasteComponent } from './waste.component';
+import { TESTING_MODULE_METADATA } from '../app.testing.module';
+import { Waste } from 'src/app/model/waste';
 
 describe('WasteComponent', () => {
-  let component: WasteComponent;
   let fixture: ComponentFixture<WasteComponent>;
+  let waste_SUT: WasteComponent;
+  let waste_DOM_SUT: any;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ WasteComponent ]
-    })
-    .compileComponents();
+    TestBed.configureTestingModule(TESTING_MODULE_METADATA).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WasteComponent);
-    component = fixture.componentInstance;
+    waste_SUT = fixture.componentInstance;
+    waste_SUT.waste = new Waste();
+    waste_DOM_SUT = fixture.nativeElement;
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(waste_SUT).toBeTruthy();
   });
 });

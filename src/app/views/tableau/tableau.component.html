@@ -13,7 +13,7 @@ cdkDropListSortingDisabled
   cdkDragBoundary=".board-boundary" 
   [cdkDragData]="card"
   [cdkDragDisabled]="!isEnableDrag(card)"
-  (cdkDragMoved)="onDragMoveChild($event)"
+  (cdkDragMoved)="onDragMove($event)"
   (cdkDragReleased)="onDragReleased($event)"
   (click)="onCardClick(card)">
   </klondike-card>

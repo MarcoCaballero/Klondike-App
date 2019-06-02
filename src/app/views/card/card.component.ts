@@ -20,7 +20,7 @@ export class CardComponent implements AfterViewInit {
     this.setCurrentImage();
   }
 
-  private setCurrentImage(): string {
+  setCurrentImage(): string {
     let imagePath = (this.card && this.card.visible != false) ?
       `../../../assets/cards/${this.card.suit}/${this.card.rank}.svg`
       : `../../../assets/cards/back.svg`;

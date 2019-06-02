@@ -1,0 +1,7 @@
+global:
+  registry: badibadi/
+  name: klondike-app
+  port: 4200 
+  image:
+    name: klondike-app
+    tag: 0.0.1

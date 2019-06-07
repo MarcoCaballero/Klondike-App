@@ -38,11 +38,12 @@ describe('StockComponent', () => {
     });
   });
 
-  it('should pass the top card to the stock when the icon is clicked', () => {
+  it('should pass the top card to the stock when the icon is clicked', async(done) => {
     stock_DOM_SUT.querySelector(`mat-icon`).click();
     fixture.detectChanges();
     setTimeout(() => {
       expect(stock_DOM_SUT.querySelectorAll('klondike-card').length).toEqual(51);
     }, 1500);
+    done();
   });
 });

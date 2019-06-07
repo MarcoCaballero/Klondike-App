@@ -16,33 +16,33 @@ describe('AppComponent', () => {
     fixture.detectChanges(); 
   });
 
-  it(`should be created`, (done) => { 
+  it(`should be created`, async(done) => { 
     expect(app_SUT).toBeTruthy();
     done();
   });
 
-  it("should have as title 'klondike-app'", (done) => {
+  it("should have as title 'klondike-app'", async(done) => {
     expect(app_SUT.title).toEqual('klondike-app');
     done();
   });
 
-  it('should render title in a span tag', (done) =>{
+  it('should render title in a span tag', async(done) =>{
     expect(app_DOM_SUT.querySelector('mat-toolbar-row').querySelector('span').textContent).toContain('Klondike');
     done();
   });
 
-  it('should render a board', (done) =>{
+  it('should render a board', async(done) =>{
     expect(app_DOM_SUT.querySelector('klondike-board')).toBeTruthy();
     done();
   });
 
-  it('should render a stock with cards and a waste with no cards', (done) =>{
+  it('should render a stock with cards and a waste with no cards', async(done) =>{
     expect(app_DOM_SUT.querySelector('klondike-waste').querySelectorAll('klondike-card').length).toEqual(0);
     expect(app_DOM_SUT.querySelector('klondike-stock').querySelectorAll('klondike-card').length).toBeGreaterThan(0);
     done();
   });
 
-  it('should render 4 empty foundations', (done) =>{
+  it('should render 4 empty foundations', async(done) =>{
     let foundation = app_DOM_SUT.querySelectorAll('klondike-foundation'); 
     for (let x = 0; x < foundation.length; x++)
     {
@@ -52,7 +52,7 @@ describe('AppComponent', () => {
     done();
   });
 
-  it('should render 7 tableaus with first card visible', (done) =>{
+  it('should render 7 tableaus with first card visible', async(done) =>{
     let tableaus = app_DOM_SUT.querySelectorAll('klondike-tableau'); 
     for (let x = 0; x < tableaus.length; x++)
     {

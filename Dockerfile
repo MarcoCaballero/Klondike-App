@@ -2,9 +2,9 @@ FROM node:10 as builder
 
 COPY package*.json ./
 
-RUN npm i && mkdir /Klondike-App && cp -R ./node_modules ./Klondike-App
+RUN npm i && mkdir /build-folder && cp -R ./node_modules ./build-folder
 
-WORKDIR /Klondike-App
+WORKDIR /build-folder
 
 COPY . .
 
@@ -22,6 +22,6 @@ COPY nginx/default.conf /etc/nginx/conf.d/
 RUN rm -rf /usr/share/nginx/html/*
 
 ## From 'builder' stage copy over the artifacts in dist folder to default nginx public folder
-COPY --from=builder /Klondike-App/dist /usr/share/nginx/html
+COPY --from=builder /build-folder/dist/Klondike-app /usr/share/nginx/html
 
-CMD ["nginx"]
+CMD ["nginx", "-g", "daemon off;"]

@@ -11,7 +11,7 @@ import { Stock } from 'src/app/model/stock';
     trigger('slideToWaste', [
       state('on', style({
         position: 'absolute',
-        left: `${(window.innerWidth / 4) - 100}px`,
+        left: '180%',
         top: '5.6%',
         'z-index': '15'
       })),

@@ -3,7 +3,7 @@
 
 module.exports = function (config) {
   config.set({
-    basePath: '',
+    basePath: '/',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
@@ -20,6 +20,10 @@ module.exports = function (config) {
       reports: ['html', 'lcovonly', 'text-summary'],
       fixWebpackSourcePaths: true
     },
+    // Serve faile with http-server (npm i -g http-server, then http-server assets folder)
+    // proxies: {
+    //   '/assets/': 'http://127.0.0.1:8080/'
+    // },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,

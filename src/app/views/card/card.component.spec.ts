@@ -10,14 +10,10 @@ describe('CardComponent', () => {
   let card_DOM_SUT: any;
   let fixture: ComponentFixture<CardComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ CardComponent ]
-    })
-    .compileComponents();
-  }));
-
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [CardComponent]
+    }).compileComponents();
     fixture = TestBed.createComponent(CardComponent);
     card_SUT = fixture.componentInstance;
     card_SUT.card = new Card(Rank.ACE, Suit.HEARTS);

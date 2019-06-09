@@ -29,6 +29,10 @@ export class Stock {
         }
     }
 
+    empty(): boolean {
+        return this.size() == 0;
+    }
+
     size(): number {
         return this._cards.length;
     }

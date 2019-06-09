@@ -1,11 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { FoundationComponent } from './foundation.component';
-import { TESTING_MODULE_METADATA } from '../app.testing.module';
-import { Foundation } from 'src/app/model/foundation';
-import { Suit } from 'src/app/model/suit';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Card } from 'src/app/model/card';
+import { Foundation } from 'src/app/model/foundation';
 import { Rank } from 'src/app/model/rank';
+import { Suit } from 'src/app/model/suit';
+import { TESTING_MODULE_METADATA } from '../app.testing.module';
+import { FoundationComponent } from './foundation.component';
+
 
 describe('FoundationComponent', () => {
   let fixture: ComponentFixture<FoundationComponent>;
@@ -13,11 +13,8 @@ describe('FoundationComponent', () => {
   let foundation_DOM_SUT: any;
   let foundation: Foundation = new Foundation(Suit.CLUBS);
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule(TESTING_MODULE_METADATA).compileComponents();
-  }));
-
   beforeEach(() => {
+    TestBed.configureTestingModule(TESTING_MODULE_METADATA).compileComponents();
     fixture = TestBed.createComponent(FoundationComponent);
     foundation_SUT = fixture.componentInstance;
     foundation_SUT.foundation = new Foundation(Suit.CLUBS);
@@ -31,7 +28,7 @@ describe('FoundationComponent', () => {
     expect(foundation_DOM_SUT.querySelector('div').id).toEqual(`foundation-${foundation.suit}-dropList`);
     expect(foundation_DOM_SUT.querySelectorAll('klondike-card').length).toEqual(0);
   });
-  
+
   it('should update items when the foundation adds cards', () => {
     foundation_SUT.foundation.push(new Card(Rank.ACE, Suit.CLUBS, true));
     foundation_SUT.foundation.push(new Card(Rank.TWO, Suit.CLUBS, true));

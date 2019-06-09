@@ -1,26 +1,19 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { StockComponent } from './stock.component';
-import { TESTING_MODULE_METADATA } from '../app.testing.module';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Stock } from 'src/app/model/stock';
-import { Card } from 'src/app/model/card';
-import { Rank } from 'src/app/model/rank';
-import { Suit } from 'src/app/model/suit';
+import { TESTING_MODULE_METADATA } from '../app.testing.module';
+import { StockComponent } from './stock.component';
 
 describe('StockComponent', () => {
   let fixture: ComponentFixture<StockComponent>;
   let stock_SUT: StockComponent;
   let stock_DOM_SUT: any;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule(TESTING_MODULE_METADATA).compileComponents();
-  }));
-
   beforeEach(() => {
+    TestBed.configureTestingModule(TESTING_MODULE_METADATA).compileComponents();
     fixture = TestBed.createComponent(StockComponent);
     stock_SUT = fixture.componentInstance;
     stock_SUT.stock = new Stock().build();
-    stock_DOM_SUT = fixture.nativeElement;
+    stock_DOM_SUT = fixture.debugElement.nativeElement;
     fixture.detectChanges();
   });
 
@@ -29,7 +22,7 @@ describe('StockComponent', () => {
     expect(stock_SUT._stock).toBeTruthy();
   });
 
-  it('should render the stock full of cards', () => {
+  it('should render the stock full of cards backed', () => {
     let allCards: any = stock_DOM_SUT.querySelectorAll('klondike-card');
 
     expect(allCards.length).toEqual(52);
@@ -38,12 +31,25 @@ describe('StockComponent', () => {
     });
   });
 
-  it('should pass the top card to the stock when the icon is clicked', async(done) => {
-    stock_DOM_SUT.querySelector(`mat-icon`).click();
+  it('should emit the event `newCardClick` when the top card is clicked', fakeAsync(() => {
+    spyOn(stock_SUT.newCardClick, 'emit');
+    let allCards: any = stock_DOM_SUT.querySelectorAll('klondike-card');
+    expect(allCards.length).toEqual(52);
+
+    allCards[(allCards.length - 1)].click();
+    tick(1100);
     fixture.detectChanges();
-    setTimeout(() => {
-      expect(stock_DOM_SUT.querySelectorAll('klondike-card').length).toEqual(51);
-    }, 1500);
-    done();
-  });
+
+    expect(stock_SUT.newCardClick.emit).toHaveBeenCalledTimes(1);
+  }));
+
+  it('should emit the event `emptyStockClick` when the empty icon is clicked', fakeAsync(() => {
+    spyOn(stock_SUT.emptyStockClick, 'emit');
+
+    stock_DOM_SUT.querySelector('mat-icon').click();
+    fixture.detectChanges();
+
+    expect(stock_SUT.emptyStockClick.emit).toHaveBeenCalledTimes(1);
+  }));
+
 });

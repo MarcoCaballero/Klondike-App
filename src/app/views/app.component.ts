@@ -1,21 +1,73 @@
-import { Component } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, ViewChild} from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatIconRegistry } from '@angular/material';
-
-import { Suit } from '../model/suit';
+import { DomSanitizer } from '@angular/platform-browser';
+import { BoardComponent } from './board/board.component';
 
 interface IconData {
   name: string,
   path: string
 }
 
+// position: absolute;
+// height: 150px;
+// width: 150px;
+// top: 45%;
+// left: 30%;
+
 @Component({
   selector: 'klondike-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations: [
+    // Start
+    trigger('startGameAnimation', [
+      state('down', style({
+        position: 'absolute',
+        top: '87%',
+        left: '1%',
+        height: '56px',
+        width: '56px',
+        'z-index': '100'
+      })),
+      state('up', style({
+        position: 'absolute',
+        height: '150px',
+        width: '150px',
+        top: '45%',
+        left: '45%',
+        'z-index': '100'
+      })),
+      transition('up => down', [
+        animate('500ms cubic-bezier(0.35, 0, 0.25, 1)')
+      ]),
+      transition('down => up', [
+        animate('500ms cubic-bezier(0, 0, 0.25, 1)')
+      ]),
+    ]),
+    // End
+    trigger('endGameAnimation', [
+      state('down', style({
+        opacity: '100',
+        'z-index': '100'
+      })),
+      state('up', style({
+        opacity: '0',
+        'z-index': '100'
+      })),
+      transition('up => down', [
+        animate('500ms cubic-bezier(0.35, 0, 0.25, 1)')
+      ]),
+      transition('down => up', [
+        animate('500ms cubic-bezier(0, 0, 0.25, 1)')
+      ]),
+    ]),
+  ]
 })
 export class AppComponent {
+  @ViewChild('board', {static: false}) board: BoardComponent;
   title = 'klondike-app';
+  timer: NodeJS.Timer;
   icons: IconData[] = [
     { name: 'hearts', path: 'cards/hearts.svg' },
     { name: 'diamonds', path: 'cards/diamonds.svg' },
@@ -24,15 +76,27 @@ export class AppComponent {
   ];
   millisFromStart: number = 0;
   matchTimeString: String = '0:00:00';
+  public isUp: boolean = true;
 
   constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
-
     this.addIcons();
+  }
 
-    setInterval(() => {
+  onStart(): void {
+    this.isUp = false;
+    this.timer = setInterval(() => {
       this.millisFromStart += 100;
       this.updateTime();
     }, 100);
+    this.board.startGame();
+  }
+
+  onStop(): void {
+    this.isUp = true;
+    clearInterval(this.timer);
+    this.millisFromStart = 0;
+    this.updateTime();
+    this.board.stopGame(); 
   }
 
   private updateTime(): void {

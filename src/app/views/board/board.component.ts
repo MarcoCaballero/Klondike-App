@@ -1,29 +1,56 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, HostListener, Input } from '@angular/core';
 import { Board } from 'src/app/model/board';
+import { Card } from 'src/app/model/card';
 import { Foundation } from 'src/app/model/foundation';
 import { Stock } from 'src/app/model/stock';
-import { ALL_SUITS, Suit } from 'src/app/model/suit';
+import { ALL_SUITS } from 'src/app/model/suit';
 import { Tableau } from 'src/app/model/tableau';
 import { Waste } from 'src/app/model/waste';
 import { MoveCardService } from 'src/app/services/move-card.service';
 import { StartService } from 'src/app/services/start.service';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Card } from 'src/app/model/card';
 
 @Component({
   selector: 'klondike-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss']
+  styleUrls: ['./board.component.scss'],
+  animations: [
+    trigger('blurAnimation', [
+      state('blur', style({
+        filter: 'blur(5px)'
+      })),
+      state('noBlur', style({
+        filter: 'blur(0px)'
+      })),
+      transition('blur => noBlur', [
+        animate('250ms cubic-bezier(0.35, 0, 0.25, 1)')
+      ]),
+      transition('noBlur => blur', [
+        animate('500ms cubic-bezier(0, 0, 0.25, 1)')
+      ]),
+    ]),
+  ]
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent {
   readonly TABLEAUS_SIZE: number = 7;
   readonly ALL_SUITS = ALL_SUITS;
   readonly TABLEAU_REGEXP: RegExp = /(\w+)-(\d)-(\w+)/;
 
   private _board: Board;
+  private _isReady: boolean;
 
   constructor(private _startService: StartService, private _moveCardService: MoveCardService) {
     this._board = this._startService.buildBoard();
+  }
+  
+  @Input()
+  set isReady(isReady: boolean) {
+    this._isReady = isReady;
+  }
+
+  get isReady(): boolean {
+    return this._isReady;
   }
 
   get stock(): Stock { return this._board.stock; }
@@ -34,8 +61,14 @@ export class BoardComponent implements OnInit {
 
   get tableaus(): Tableau[] { return this._board.tableaus; }
 
-  ngOnInit() {
+  startGame(): void {
+    this._startService.start();
   }
+
+  stopGame(): void {
+    this._startService.stop();
+  }
+  
   @HostListener('onNewCardClicked')
   onNewCardClicked(): void {
     this._moveCardService.moveCardFromStockToWaste(this._board);

@@ -17,14 +17,19 @@ export class StartService {
   }
 
   buildBoard(): Board {
-    this.start();
+    this.buildFoundations();
     return this._board;
   }
 
   start(): void {
+    this._board.restoreWastFromAll();
     this.buildStock();
     this.buildFoundations();
     this.buildTableaus();
+  }
+
+  stop(): void {
+    this._board.restoreWastFromAll();
   }
 
   private buildStock(): void {

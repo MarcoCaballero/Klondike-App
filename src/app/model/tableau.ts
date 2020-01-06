@@ -13,6 +13,7 @@ export class Tableau {
 
     get idx(): number { return this._idx; }
 
+    get cards() { return this._cards; }
     
     isAllowedPush(card: Card): boolean {
         return this.empty() || (this.hasAllowedRank(card) && this.isCardAdditionAllowed(card));
@@ -46,6 +47,10 @@ export class Tableau {
         return this._cards.pop();
     }
 
+    clear(): void {
+        this._cards = [];
+    }
+
     getCards(): Array<Card> {
         return this._cards;
     }
@@ -53,9 +58,9 @@ export class Tableau {
     private isCardAdditionAllowed(card: Card): boolean {
         return (this.tail().isRed()) ? !card.isRed() : card.isRed();
     }
+
     private hasAllowedRank(card: Card) {
         return  (this.empty()) ?
             card.rank === Rank.ACE : ((this.tail().rank - card.rank) === 1);
-
     }
 }

@@ -20,10 +20,15 @@ module.exports = function (config) {
       reports: ['html', 'lcovonly', 'text-summary'],
       fixWebpackSourcePaths: true
     },
-    // Serve faile with http-server (npm i -g http-server, then http-server assets folder)
-    // proxies: {
-    //   '/assets/': 'http://127.0.0.1:8080/'
-    // },
+    files: [
+      { pattern: './src/assets/**', watched: false, included: false, nocache: false, served: true },
+      { pattern: './src/assets/cars/**', watched: false, included: false, nocache: false, served: true }
+    ],
+    // Serve fails with http-server (npm i -g http-server, then http-server assets folder)
+    proxies: {
+      // '/assets/': 'http://127.0.0.1:8080/'
+      '/assets': 'base/src/assets/'
+    },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,

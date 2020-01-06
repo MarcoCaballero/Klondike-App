@@ -29,7 +29,8 @@ export class Board {
     get tableaus(): Tableau[] { return this._tableaus; }
 
     buildStock(): void {
-        this._stock.build().shuffle();
+        this._stock.build()
+                   .shuffle();
     }
 
     buildFoundations(): void {
@@ -90,6 +91,20 @@ export class Board {
             card.hide();
             this._stock.push(card);
         } while (!this.waste.empty());
+    }
+
+    restoreWastFromAll(): void {
+        this._foundations.forEach((foundation: Foundation) => {
+            // this.waste.concat(foundation.cards);
+            foundation.clear();
+        });
+        this._tableaus.forEach((tableau: Tableau) => {
+            // this.waste.concat(tableau.cards);
+            tableau.clear();
+        });
+        // this.restoreStockFromWaste();
+        this.waste.clear();
+        this.stock.clear();
     }
 
     private getFoundationBySuit(suit: Suit): Foundation {

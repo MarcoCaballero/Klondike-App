@@ -1,5 +1,5 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Card } from 'src/app/model/card';
 import { Stock } from 'src/app/model/stock';
 
@@ -11,7 +11,7 @@ import { Stock } from 'src/app/model/stock';
     trigger('slideToWaste', [
       state('on', style({
         position: 'absolute',
-        left: '180%',
+        left: '350%',
         top: '5.6%',
         'z-index': '15'
       })),
@@ -58,7 +58,7 @@ export class StockComponent {
     this.emptyStockClick.emit(true);
   }
 
-  isSlidingToWaste(i: number) {
+  isSlidingToWaste(i: number): boolean {
     return this._slideToWaste && (i >= (this.cards.length - 1))
   }
 

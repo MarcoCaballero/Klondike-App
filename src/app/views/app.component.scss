@@ -14,4 +14,17 @@ $warn: map-get($klondike-app-theme, klondike-app-warn);
     right: 3%;
     font-size: medium;
   }
+
+  .start-button {
+    position: absolute;
+    top: 87%;
+  }
+
+  .stop-button {
+    background-color: mat-color($klondike-app-warn, darker);
+    color: white;
+    position: absolute;
+    top: 87%;
+    right: 1%;
+  }
 }

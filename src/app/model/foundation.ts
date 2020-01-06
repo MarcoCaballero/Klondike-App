@@ -39,6 +39,10 @@ export class Foundation {
         return this._cards.pop();
     }
 
+    clear(): void {
+        this._cards = [];
+    }
+
     private hasSameSuit(card: Card) {
         return this._suit === card.suit;
     }

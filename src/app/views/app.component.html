@@ -4,10 +4,12 @@
     <mat-toolbar-row>
       <span>Klondike</span>
       <span class="timer">{{matchTimeString}}</span>
+      <button [@startGameAnimation]="isUp ? 'up': 'down'" mat-fab  class="start-button" color="primary" (click)="onStart()"> {{ isUp ? 'New Game': 'Restart' }}</button>
+      <button [@endGameAnimation]="isUp ? 'up': 'down'" [disabled]="isUp" mat-fab class="stop-button" (click)="onStop()">End</button>
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <klondike-board></klondike-board>
+  <klondike-board #board [isReady]="!isUp"></klondike-board>
 </div>
 
 <router-outlet></router-outlet>

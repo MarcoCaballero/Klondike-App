@@ -9,6 +9,7 @@ describe('StartService', () => {
   beforeEach(() => { 
     startService = new StartService();
     board = startService.buildBoard();
+    startService.start();
   });
   afterEach(() => {
     startService = null; 

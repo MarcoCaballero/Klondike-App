@@ -16,6 +16,7 @@ describe('MoveCardService', () => {
     let startService : StartService = new StartService();
     moveCardService = new MoveCardService();
     board = startService.buildBoard();
+    startService.start();
   });
   afterEach(() => {
     moveCardService = null; 

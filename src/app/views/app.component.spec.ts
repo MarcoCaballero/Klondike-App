@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { TESTING_MODULE_METADATA } from './app.testing.module';
 
-
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let app_SUT: AppComponent;
@@ -37,8 +36,23 @@ describe('AppComponent', () => {
   });
 
   it('should render a stock with cards and a waste with no cards', async (done) => {
-    expect(app_DOM_SUT.querySelector('klondike-waste').querySelectorAll('klondike-card').length).toEqual(0);
-    expect(app_DOM_SUT.querySelector('klondike-stock').querySelectorAll('klondike-card').length).toBeGreaterThan(0);
+
+    let buttons = fixture.debugElement.nativeElement.querySelectorAll('button');
+    expect(buttons[0].firstElementChild.textContent).toEqual(' New Game');
+    buttons[0].click();
+    fixture.detectChanges();
+
+    expect(buttons[0].firstElementChild.textContent).toEqual(' Restart');
+    fixture.detectChanges();
+
+    fixture.whenStable().then(() => {
+      expect(app_DOM_SUT.querySelector('klondike-waste').querySelectorAll('klondike-card').length).toEqual(0);
+      expect(app_DOM_SUT.querySelector('klondike-stock').querySelectorAll('klondike-card').length).toBeGreaterThan(0);
+      buttons[1].click();
+      fixture.detectChanges();
+      expect(buttons[0].firstElementChild.textContent).toEqual("New Game");
+    });
+
     done();
   });
 
@@ -52,19 +66,28 @@ describe('AppComponent', () => {
   });
 
   it('should render 7 tableaus with first card visible', async (done) => {
-    let tableaus = app_DOM_SUT.querySelectorAll('klondike-tableau');
-    for (let x = 0; x < tableaus.length; x++) {
-      let cards = tableaus[x].querySelectorAll('klondike-card')
-      for (let y = 0; y < cards.length; y++) {
-        if (y === cards.length - 1) {
-          expect(cards[y].querySelector('div').style.background).not.toContain('back.svg');
+    let buttons = fixture.debugElement.nativeElement.querySelectorAll('button');
+    expect(buttons[0].firstElementChild.textContent).toEqual(' New Game');
+    buttons[0].click();
+    fixture.detectChanges();
+
+    fixture.whenStable().then(() => {
+      let tableaus = app_DOM_SUT.querySelectorAll('klondike-tableau');
+      for (let x = 0; x < tableaus.length; x++) {
+        let cards = tableaus[x].querySelectorAll('klondike-card')
+        for (let y = 0; y < cards.length; y++) {
+          if (y === cards.length - 1) {
+            expect(cards[y].querySelector('div').style.background).not.toContain('back.svg');
+          }
+          else {
+            expect(cards[y].querySelector('div').style.background).toContain('back.svg');
+          }
         }
-        else {
-          expect(cards[y].querySelector('div').style.background).toContain('back.svg');
-        }
-      }
-    };
-    expect(tableaus.length).toEqual(7);
+      };
+      expect(tableaus.length).toEqual(7);
+      buttons[1].click();
+    });
+
     done();
   });
 });

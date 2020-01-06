@@ -14,6 +14,13 @@ describe('BoardComponent', () => {
     boardComponent = fixture.componentInstance;
     compiledBoard = fixture.nativeElement;
     fixture.detectChanges();
+    boardComponent.startGame();
+    fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    boardComponent.stopGame();
+    fixture.detectChanges();
   });
 
   it(`should be created`, () => {

@@ -19,6 +19,10 @@ export class Waste {
         this._cards.push(card);
     }
 
+    concat(cards: Array<Card>): void {
+        this._cards.concat(cards);
+    }
+
     empty(): boolean {
         return this.size() == 0;
     }
@@ -33,5 +37,9 @@ export class Waste {
 
     pop(): Card {
         return this._cards.pop();
+    }
+    
+    clear(): void {
+        this._cards = [];
     }
 }

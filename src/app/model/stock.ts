@@ -53,6 +53,10 @@ export class Stock {
         return this._cards.pop();
     }
 
+    clear(): void {
+        this._cards = [];
+    }
+
     getCards(): Array<Card> {
         return this._cards;
     }

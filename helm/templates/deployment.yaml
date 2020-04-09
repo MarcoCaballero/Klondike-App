@@ -1,34 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: {{ .Values.global.name }}-deployment
+    name: {{ .Values.usvc.name }}-deployment
     labels:
-       app: {{ .Values.global.name }}
+       app: {{ .Values.usvc.name }}
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.global.name }}
+      app: {{ .Values.usvc.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.global.name }}
+        app: {{ .Values.usvc.name }}
     spec:
         containers:
-        - name: {{ .Values.global.name }}
-          image: {{ .Values.global.registry }}{{ .Values.global.image.name }}:{{ .Values.global.image.tag }}
+        - name: {{ .Values.usvc.name }}
+          image: {{ .Values.global.registry }}{{ .Values.usvc.image.name }}:{{ .Values.usvc.image.tag }}
           imagePullPolicy: IfNotPresent
           ports:
-          - containerPort: {{ .Values.global.port }}  
-
----    
-kind: Service
-apiVersion: v1
-metadata:
-  name: {{ .Values.global.name}}-service
-spec:
-  type: NodePort
-  selector:
-    app: {{ .Values.global.name }}
-  ports:
-  - protocol: TCP
-    port: {{ .Values.global.port }}
+          - containerPort: {{ .Values.usvc.port }}

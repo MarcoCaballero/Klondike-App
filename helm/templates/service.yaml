@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.global.name}}-service
+spec:
+  type: NodePort
+  selector:
+    app: {{ .Values.global.name }}
+  ports:
+  - protocol: TCP
+    port: {{ .Values.global.port }}

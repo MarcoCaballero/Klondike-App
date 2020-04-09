@@ -1,5 +1,6 @@
 global:
   registry: badibadi/
+usvc:
   name: klondike-app
   port: 4200 
   image:

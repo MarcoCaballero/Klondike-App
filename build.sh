@@ -2,7 +2,9 @@
 
 DEPLOYMENT_NAME="klondike-deployment"
 NAMESPACE="klondike-ns"
-IMAGE_REPOSITORY="dockerhub.com/badibadi"
+IMAGE_REPOSITORY="badibadi"
+IMAGE_NAME="klondike-app"
+IMAGE_TAG="0.0.1"
 
 _help() {
 cat << EOF
@@ -20,20 +22,31 @@ _clean() {
 
 _deploy() {
     echo "HELM DEPENDENCY UPDATE\n"
-    helm dep update helm/master
+    helm dep update helm
     [ $? -ne 0 ] && echo "Ops! Something went wrong..." && exit 1
     
     echo "HELM DEPLOY\n"
     local command="helm install helm --name $DEPLOYMENT_NAME \
-        --debug"
-
-#-set ct.usvc.hostpath=/$PWD/test \
+        --debug --wait"
 
     echo "Command to run: $command"
     output=$(${command} 2>&1)
+
+    [ $? -ne 0 ] && echo "Output: ${output}" && echo "Ops! Something went wrong..." && _clean && exit 1
     echo "Output: ${output}"
 
-    [ $? -ne 0 ] && echo "Ops! Something went wrong..." && _clean && exit 1
+}
+
+_build() {
+
+    echo "DOCKER BUILD\n"
+    local command="docker build . --tag $IMAGE_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG"
+
+    echo "Command to run: $command"
+    output=$(${command} 2>&1)
+
+    [ $? -ne 0 ] && echo "Output: ${output}" && echo "Ops! Something went wrong..." && exit 1
+    echo "Output: ${output}"
 }
 
 [ $# -eq 0 ] && echo "No args, no party. Try ${0##*/} -h" && exit 0
@@ -46,6 +59,10 @@ while [ $# -ne 0 ]; do
             ;;
         -d|--deploy)
             _deploy
+            shift
+            ;;
+        -d|--build)
+            _build
             shift
             ;;
         -c|--clean)

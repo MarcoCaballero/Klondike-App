@@ -4,6 +4,7 @@ DEPLOYMENT_NAME="klondike-deployment"
 NAMESPACE="klondike-ns"
 IMAGE_REPOSITORY="badibadi"
 IMAGE_NAME="klondike-app"
+APP_SERVICE="klondike-app-service"
 IMAGE_TAG="0.0.1"
 
 _help() {
@@ -11,6 +12,8 @@ cat << EOF
 Usage: ${0##*/} <args>
     -h, --help             Display help.
     -d, --deploy           Deploy.
+    -l, --launch           Expose application service for minikube.
+    -b, --build            Build app.
     -c, --clean            Clean up deployment. 
 EOF
 }
@@ -27,7 +30,7 @@ _deploy() {
     
     echo "HELM DEPLOY\n"
     local command="helm install helm --name $DEPLOYMENT_NAME \
-        --debug --wait"
+        --debug --wait -ns $NAMESPACE"
 
     echo "Command to run: $command"
     output=$(${command} 2>&1)
@@ -35,6 +38,18 @@ _deploy() {
     [ $? -ne 0 ] && echo "Output: ${output}" && echo "Ops! Something went wrong..." && _clean && exit 1
     echo "Output: ${output}"
 
+}
+
+_launch() {
+
+    echo "MINIKUBE SERVICE\n"
+    local command=" minikube service $APP_SERVICE"
+
+    echo "Command to run: $command"
+    output=$(${command} 2>&1)
+
+    [ $? -ne 0 ] && echo "Output: ${output}" && echo "Ops! Something went wrong..." && exit 1
+    echo "Output: ${output}"
 }
 
 _build() {
@@ -61,8 +76,12 @@ while [ $# -ne 0 ]; do
             _deploy
             shift
             ;;
-        -d|--build)
+        -b|--build)
             _build
+            shift
+            ;;
+        -l|--launch)
+            _launch
             shift
             ;;
         -c|--clean)

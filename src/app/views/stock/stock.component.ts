@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Card } from 'src/app/model/card';
-import { Stock } from 'src/app/model/stock';
+import { Card } from 'app/model/card';
+import { Stock } from 'app/model/stock';
+import { GameService } from 'app/services/game.service';
 
 @Component({
   selector: 'klondike-stock',
@@ -36,7 +37,7 @@ export class StockComponent {
   _slideToWaste: boolean = false;
   _stock: Stock;
 
-  constructor() {
+  constructor(private _gameService: GameService) {
   }
 
   @Input()
@@ -68,7 +69,17 @@ export class StockComponent {
 
   private triggerMoveCardToWasteAnimation(): void {
     this._slideToWaste = true;
-    this.getTopCard().show();
+    // this.getTopCard().show();
+    // let counter: number = 0;
+    // let numberOfCards = +this._gameService.gameMode;
+    // while (counter < numberOfCards) {
+    //   this._slideToWaste = true;
+    //   this.getTopCard().show();
+    //   setTimeout(() => {
+    //     counter++;
+    //     this._slideToWaste = false;
+    //   }, 500*numberOfCards);
+    // }
     setTimeout(() => {
       this.newCardClick.emit(true);
       this._slideToWaste = false;

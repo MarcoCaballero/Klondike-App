@@ -27,4 +27,13 @@ $warn: map-get($klondike-app-theme, klondike-app-warn);
     top: 87%;
     right: 1%;
   }
+
+  mat-radio-group {
+    position: absolute;
+    top: 80%;
+    left: 40%;
+    .mat-radio-button ~ .mat-radio-button {
+      margin-left: 16px;
+    }
+  }
 }

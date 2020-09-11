@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Card } from 'src/app/model/card';
-import { Foundation } from 'src/app/model/foundation';
-import { Rank } from 'src/app/model/rank';
-import { Suit } from 'src/app/model/suit';
+import { Card } from 'app/model/card';
+import { Foundation } from 'app/model/foundation';
+import { Rank } from 'app/model/rank';
+import { Suit } from 'app/model/suit';
 import { TESTING_MODULE_METADATA } from '../app.testing.module';
 import { FoundationComponent } from './foundation.component';
 

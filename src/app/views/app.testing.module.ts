@@ -12,6 +12,7 @@ import { TableauComponent } from './tableau/tableau.component';
 import { WasteComponent } from './waste/waste.component';
 import { AppComponent } from './app.component';
 import { APP_BASE_HREF } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 // TestModuleMetadata
 export const TESTING_MODULE_METADATA: TestModuleMetadata = {
@@ -20,6 +21,7 @@ export const TESTING_MODULE_METADATA: TestModuleMetadata = {
         BrowserAnimationsModule,
         AppRoutingModule,
         HttpClientModule,
+        FormsModule,
         ANGULAR_CDK_MODULES,
         ANGULAR_MATERIAL_MODULES
       ] ,
@@ -33,6 +35,7 @@ export const TESTING_MODULE_METADATA: TestModuleMetadata = {
         TableauComponent
       ],
       providers: [
-        {provide: APP_BASE_HREF, useValue: '/'}
+        {provide: APP_BASE_HREF, useValue: '/'},
+        AppComponent
       ]
 }

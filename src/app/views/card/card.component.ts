@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, Input } from '@angular/core';
-import { Card } from 'src/app/model/card';
+import { Card } from 'app/model/card';
 
 @Component({
   selector: 'klondike-card',

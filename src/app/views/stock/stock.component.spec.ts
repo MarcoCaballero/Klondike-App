@@ -1,5 +1,5 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Stock } from 'src/app/model/stock';
+import { Stock } from 'app/model/stock';
 import { TESTING_MODULE_METADATA } from '../app.testing.module';
 import { StockComponent } from './stock.component';
 

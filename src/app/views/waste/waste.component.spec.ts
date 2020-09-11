@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Waste } from 'src/app/model/waste';
+import { Waste } from 'app/model/waste';
 import { TESTING_MODULE_METADATA } from '../app.testing.module';
 import { WasteComponent } from './waste.component';
 

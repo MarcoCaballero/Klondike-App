@@ -13,5 +13,6 @@ id="wasteDropList"
   [cdkDragDisabled]="!((i+1) == cards.length)"
   [cdkDragData]="card"
   (cdkDragMoved)="onDragMove($event)"
-  (cdkDragReleased)="onDragReleased($event)"></klondike-card>
+  (cdkDragReleased)="onDragReleased($event)"
+  (dblclick)="onCardDClick(card)"></klondike-card>
 </div>

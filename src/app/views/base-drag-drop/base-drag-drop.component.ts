@@ -1,6 +1,6 @@
 import { CdkDragMove, CdkDragRelease } from '@angular/cdk/drag-drop';
-import { Card } from 'src/app/model/card';
-import { DragDropService } from 'src/app/services/ui-utils/drag-drop.service';
+import { Card } from 'app/model/card';
+import { DragDropService } from 'app/services/ui-utils/drag-drop.service';
 
 export abstract class BaseDragDropComponent {
   protected _currentDragPos: WebKitPoint;

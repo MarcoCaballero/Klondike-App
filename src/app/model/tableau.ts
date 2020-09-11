@@ -16,7 +16,7 @@ export class Tableau {
     get cards() { return this._cards; }
     
     isAllowedPush(card: Card): boolean {
-        return this.empty() || (this.hasAllowedRank(card) && this.isCardAdditionAllowed(card));
+        return (this.hasAllowedRank(card) && this.isCardAdditionAllowed(card));
     }
 
     push(card: Card): void {

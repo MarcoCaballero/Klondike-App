@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CardComponent } from './card.component';
-import { Card } from 'src/app/model/card';
-import { Rank } from 'src/app/model/rank';
-import { Suit } from 'src/app/model/suit';
+import { Card } from 'app/model/card';
+import { Rank } from 'app/model/rank';
+import { Suit } from 'app/model/suit';
 
 describe('CardComponent', () => {
   let card_SUT: CardComponent;

@@ -4,6 +4,7 @@ import { Tableau } from './tableau';
 import { Card } from './card';
 import { Foundation } from './foundation';
 import { ALL_SUITS, Suit } from './suit';
+import { GameMode } from './game-mode';
 
 export class Board {
     readonly TABLEAUS_SIZE: number = 7;
@@ -30,7 +31,7 @@ export class Board {
 
     buildStock(): void {
         this._stock.build()
-                   .shuffle();
+            .shuffle();
     }
 
     buildFoundations(): void {
@@ -60,7 +61,7 @@ export class Board {
 
     popCurrentTableauCard(tableauIdx: number): Card {
         let tableau: Tableau = this.getTableauByIdx(tableauIdx);
-        const poppedCard: Card =  tableau.pop();
+        const poppedCard: Card = tableau.pop();
         if (!tableau.empty())
             tableau.tail().show();
         return poppedCard;
@@ -74,41 +75,49 @@ export class Board {
         let tableau: Tableau = this.getTableauByIdx(tableauIdx);
         tableau.push(card);
     }
+
     moveCardsToTableau(cardList: Array<Card>, tableauIdx: number): void {
         let tableau: Tableau = this.getTableauByIdx(tableauIdx);
-        while (cardList.length > 0){
+        while (cardList.length > 0) {
             tableau.push(cardList.pop());
         }
     }
 
-    moveCardToWaste(): void {
-        this._waste.push(this._stock.pop());
+    moveCardToWaste(gameMode: GameMode): void {
+        let counter: number = 0;
+        while (counter < +gameMode) {
+            let card: Card = this._stock.pop();
+            card.show();
+            this._waste.push(card);
+            counter++;
+        }
     }
 
     restoreStockFromWaste(): void {
-        do {
+        while (!this.waste.empty()) {
             let card: Card = this.waste.pop();
             card.hide();
             this._stock.push(card);
-        } while (!this.waste.empty());
+        }
     }
 
-    restoreWastFromAll(): void {
+    clean(): void {
         this._foundations.forEach((foundation: Foundation) => {
-            // this.waste.concat(foundation.cards);
             foundation.clear();
         });
         this._tableaus.forEach((tableau: Tableau) => {
-            // this.waste.concat(tableau.cards);
             tableau.clear();
         });
-        // this.restoreStockFromWaste();
         this.waste.clear();
         this.stock.clear();
     }
 
-    private getFoundationBySuit(suit: Suit): Foundation {
+    getFoundationBySuit(suit: Suit): Foundation {
         return this._foundations.filter(foundation => foundation.suit === suit)[0];
+    }
+
+    getEmptyTableaus(): Array<Tableau> {
+        return this._tableaus.filter((tableau: Tableau) => tableau.empty());
     }
 
     private getTableauByIdx(idx: number): Tableau {

@@ -11,7 +11,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $klondike-app-primary: mat-palette($mat-blue-grey, 900, A100, A400);
-$klondike-app-accent:  mat-palette($mat-yellow, A200, A100, A400);
+$klondike-app-accent:  mat-palette($mat-deep-orange, 400, 200, 800);
 
 $klondike-app-board: mat-palette($mat-green, 500, 400, 700);
 

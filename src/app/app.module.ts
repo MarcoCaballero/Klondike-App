@@ -14,6 +14,7 @@ import { WasteComponent } from './views/waste/waste.component';
 import { FoundationComponent } from './views/foundation/foundation.component';
 import { TableauComponent } from './views/tableau/tableau.component';
 import { BoardComponent } from './views/board/board.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { BoardComponent } from './views/board/board.component';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    FormsModule,
     HttpClientModule,
     ANGULAR_CDK_MODULES,
     ANGULAR_MATERIAL_MODULES

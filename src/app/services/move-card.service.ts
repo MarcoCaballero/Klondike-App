@@ -1,42 +1,43 @@
 import { Injectable } from '@angular/core';
 import { Board } from '../model/board';
-import { Suit } from '../model/suit';
 import { Card } from '../model/card';
+import { Suit } from '../model/suit';
+import { GameService } from './game.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MoveCardService {
 
-  constructor() { }
+  private _board: Board;
 
-  moveCardFromStockToWaste(board: Board): void {
-    board.moveCardToWaste();
+  constructor(private _gameService: GameService) {
+    this._board = this._gameService.board;
   }
 
-  moveAllCardFromWasteToStock(board: Board): void {
-    board.restoreStockFromWaste();
+  moveCardFromStockToWaste(): void {
+    this._board.moveCardToWaste(this._gameService.gameMode);
   }
 
-  moveCardFromTableauToFoundation(board: Board, tableauIdx: number, foundationSuit: Suit): void {
-    board.moveCardToFoundation(board.popCurrentTableauCard(tableauIdx), foundationSuit);
+  moveCardFromTableauToFoundation(tableauIdx: number, foundationSuit: Suit): void {
+    this._board.moveCardToFoundation(this._board.popCurrentTableauCard(tableauIdx), foundationSuit);
   }
 
-  moveCardFromWasteToFoundation(board: Board, foundationSuit: Suit): void {
-    board.moveCardToFoundation(board.popCurrentWasteCard(), foundationSuit);
+  moveCardFromWasteToFoundation(foundationSuit: Suit): void {
+    this._board.moveCardToFoundation(this._board.popCurrentWasteCard(), foundationSuit);
   }
 
-  moveCardFromTableauToTableau(board: Board, tableauOriginIdx: number, tableauDestinationIdx: number, cardToMove: Card): void {
+  moveCardFromTableauToTableau(tableauOriginIdx: number, tableauDestinationIdx: number, cardToMove: Card): void {
     let _cardList: Card[] = [];
     let _cardToMove: Card;
     do {
-      _cardToMove = board.popCurrentTableauCard(tableauOriginIdx)
+      _cardToMove = this._board.popCurrentTableauCard(tableauOriginIdx)
       _cardList.push(_cardToMove);
-    } while(_cardToMove != cardToMove);
-    board.moveCardsToTableau(_cardList, tableauDestinationIdx);
+    } while (_cardToMove != cardToMove);
+    this._board.moveCardsToTableau(_cardList, tableauDestinationIdx);
   }
 
-  moveCardFromWasteToTableau(board: Board, tableauIdx: number): void {
-    board.moveCardToTableau(board.popCurrentWasteCard(), tableauIdx);
+  moveCardFromWasteToTableau(tableauIdx: number): void {
+    this._board.moveCardToTableau(this._board.popCurrentWasteCard(), tableauIdx);
   }
 }

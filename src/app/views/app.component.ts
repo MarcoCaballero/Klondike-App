@@ -1,19 +1,14 @@
-import { Component, ViewChild} from '@angular/core';
+import { Component } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-import { BoardComponent } from './board/board.component';
+import { StartService } from 'app/services/start.service';
+import { GameMode, GetGameMode } from 'app/model/game-mode';
 
 interface IconData {
   name: string,
   path: string
 }
-
-// position: absolute;
-// height: 150px;
-// width: 150px;
-// top: 45%;
-// left: 30%;
 
 @Component({
   selector: 'klondike-root',
@@ -65,9 +60,8 @@ interface IconData {
   ]
 })
 export class AppComponent {
-  @ViewChild('board', {static: false}) board: BoardComponent;
   title = 'klondike-app';
-  timer: NodeJS.Timer;
+  timer: any;
   icons: IconData[] = [
     { name: 'hearts', path: 'cards/hearts.svg' },
     { name: 'diamonds', path: 'cards/diamonds.svg' },
@@ -75,20 +69,24 @@ export class AppComponent {
     { name: 'clubs', path: 'cards/clubs.svg' }
   ];
   millisFromStart: number = 0;
-  matchTimeString: String = '0:00:00';
+  matchTimeString: string = '0:00:00';
+  selectedMode: string = GameMode.ONE_CARD_MODE;
   public isUp: boolean = true;
 
-  constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer) {
+  constructor(private iconRegistry: MatIconRegistry,
+              private sanitizer: DomSanitizer,
+              private _startService: StartService) {
     this.addIcons();
   }
 
   onStart(): void {
+    this._startService.gameMode = GetGameMode(this.selectedMode);
     this.isUp = false;
     this.timer = setInterval(() => {
       this.millisFromStart += 100;
       this.updateTime();
     }, 100);
-    this.board.startGame();
+    this._startService.start();
   }
 
   onStop(): void {
@@ -96,7 +94,7 @@ export class AppComponent {
     clearInterval(this.timer);
     this.millisFromStart = 0;
     this.updateTime();
-    this.board.stopGame(); 
+    this._startService.stop();
   }
 
   private updateTime(): void {
@@ -112,7 +110,7 @@ export class AppComponent {
   }
 
   private addIcons(): void {
-    this.icons.forEach(icon => {
+    this.icons.forEach((icon: IconData) => {
       this.iconRegistry.addSvgIconInNamespace('klondike-assets', icon.name,
         this.sanitizer.bypassSecurityTrustResourceUrl(`../../assets/${icon.path}`));
     });

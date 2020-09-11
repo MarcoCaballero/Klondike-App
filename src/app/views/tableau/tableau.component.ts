@@ -1,10 +1,11 @@
-import { CdkDragDrop, CdkDragMove, CdkDragEnter, DragRef } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDragEnter, CdkDragMove, DragRef } from '@angular/cdk/drag-drop';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Card } from 'src/app/model/card';
-import { Tableau } from 'src/app/model/tableau';
-import { DragDropService } from 'src/app/services/ui-utils/drag-drop.service';
+import { Card } from 'app/model/card';
+import { Tableau } from 'app/model/tableau';
+import { DoubleClickOnTableauEvent } from 'app/views/events';
+import { DragDropService } from 'app/services/ui-utils/drag-drop.service';
 import { BaseDragDropComponent } from '../base-drag-drop/base-drag-drop.component';
-import { element } from 'protractor';
+import { MoveCardService } from 'app/services/move-card.service';
 
 @Component({
   selector: 'klondike-tableau',
@@ -13,19 +14,21 @@ import { element } from 'protractor';
 })
 export class TableauComponent extends BaseDragDropComponent implements OnInit {
   @Output() cardPush: EventEmitter<CdkDragDrop<Card[]>> = new EventEmitter();
+  @Output() doubleClicked: EventEmitter<DoubleClickOnTableauEvent> = new EventEmitter();
   private _tableau: Tableau;
 
   @Input()
   set tableau(tableau: Tableau) {
     this._tableau = tableau;
-    // this._tableau.push(new Card(Rank.ACE, Suit.CLUBS, true));
   }
 
   get cards(): Array<Card> { return this._tableau.getCards(); }
 
   get idx(): number { return this._tableau.idx; }
 
-  constructor(public dragDropService: DragDropService, private _elementDOM: ElementRef) {
+  constructor(public dragDropService: DragDropService,
+    private _moveCardService: MoveCardService,
+    private _elementDOM: ElementRef) {
     super(dragDropService);
   }
 
@@ -45,8 +48,8 @@ export class TableauComponent extends BaseDragDropComponent implements OnInit {
     }
   }
 
-  onCardClick(card: Card): void {
-    console.log(`Clicked on: ${JSON.stringify(card)}`);
+  onCardDClick(card: Card): void {
+    this.doubleClicked.emit({tableau: this._tableau, card: card});
   }
 
   private isAllowedPush(card): boolean {
@@ -58,26 +61,26 @@ export class TableauComponent extends BaseDragDropComponent implements OnInit {
   }
 
   onDragMoveChild(event: CdkDragMove<Card>): void {
-    super.onDragMove(event);
-    let div: any = this._elementDOM.nativeElement.children.item(0);
-    var children: HTMLDivElement[] = div.getElementsByClassName('cdk-drag');
+    // super.onDragMove(event);
+    // let div: any = this._elementDOM.nativeElement.children.item(0);
+    // var children: HTMLDivElement[] = div.getElementsByClassName('cdk-drag');
 
-    for (var i = 0; i < children.length; i++) {
-      console.log(`Pointer: ${JSON.stringify(event.pointerPosition)}`);
-      children[i].style.position = 'fixed';
-      children[i].style.left = `${(event.pointerPosition.x - 25)}px`;
-      children[i].style.top = `${(event.pointerPosition.y - 30) - ((children.length - i) * 20)}px`;
-    }
+    // for (var i = 0; i < children.length; i++) {
+    //   console.log(`Pointer: ${JSON.stringify(event.pointerPosition)}`);
+    //   children[i].style.position = 'fixed';
+    //   children[i].style.left = `${(event.pointerPosition.x - 25)}px`;
+    //   children[i].style.top = `${(event.pointerPosition.y - 30) - ((children.length - i) * 20)}px`;
+    // }
   }
 
   onDropListEntered(event: CdkDragEnter<Card>): void {
-   setTimeout(() => {
-    console.log(`Enter to: ${ JSON.stringify(event.container.data)}`);
-    let ref: any = event.container._dropListRef;
-    console.log(`Size of: ${ref._draggables.length}`);
-    ref._draggables.forEach((element: DragRef<Card>) => {
-      element.reset();
-    });
-   }, 1000);
+    // setTimeout(() => {
+    //   console.log(`Enter to: ${JSON.stringify(event.container.data)}`);
+    //   let ref: any = event.container._dropListRef;
+    //   console.log(`Size of: ${ref._draggables.length}`);
+    //   ref._draggables.forEach((element: DragRef<Card>) => {
+    //     element.reset();
+    //   });
+    // }, 1000);
   }
 }

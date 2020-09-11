@@ -1,70 +1,78 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TESTING_MODULE_METADATA } from '../app.testing.module';
 import { BoardComponent } from './board.component';
+import { StartService } from 'app/services/start.service';
+import { GameMode } from 'app/model/game-mode';
+import { AppComponent } from '../app.component';
 
 
 describe('BoardComponent', () => {
-  let boardComponent: BoardComponent;
   let fixture: ComponentFixture<BoardComponent>;
-  let compiledBoard: any;
+  let boardComponentSUT: BoardComponent;
+  let boardComponentSUTDOM: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule(TESTING_MODULE_METADATA).compileComponents();
     fixture = TestBed.createComponent(BoardComponent);
-    boardComponent = fixture.componentInstance;
-    compiledBoard = fixture.nativeElement;
+    boardComponentSUT = fixture.componentInstance;
+    boardComponentSUTDOM = fixture.nativeElement;
     fixture.detectChanges();
-    boardComponent.startGame();
+    fixture.detectChanges();
+    let app: AppComponent = TestBed.get(AppComponent);
+    app.onStart();
+    boardComponentSUT.isReady = true;
+    // startService.start();
     fixture.detectChanges();
   });
 
   afterEach(() => {
-    boardComponent.stopGame();
+    let app: AppComponent = TestBed.get(AppComponent);
+    app.onStop();
     fixture.detectChanges();
   });
 
   it(`should be created`, () => {
-    expect(boardComponent).toBeTruthy();
+    expect(boardComponentSUT).toBeTruthy();
   });
 
   it(`should display the movement of a card from stock to waste`, () => {
-    expect(compiledBoard.querySelector('klondike-waste')
+    expect(boardComponentSUTDOM.querySelector('klondike-waste')
       .querySelectorAll('klondike-card').length).toEqual(0);
 
-    boardComponent.onNewCardClicked();
+    boardComponentSUT.onNewCardClicked();
     fixture.detectChanges();
 
-    expect(compiledBoard.querySelector('klondike-waste')
+    expect(boardComponentSUTDOM.querySelector('klondike-waste')
       .querySelectorAll('klondike-card').length).toEqual(1);
   });
 
   it(`should move card from stock to waste`, () => {
-    expect(boardComponent.waste.empty).toBeTruthy;
+    expect(boardComponentSUT.waste.empty()).toBeTruthy();
 
-    boardComponent.onNewCardClicked();
+    boardComponentSUT.onNewCardClicked();
     fixture.detectChanges();
 
-    expect(boardComponent.waste.empty).toBeFalsy;
+    expect(boardComponentSUT.waste.empty()).toBeFalsy();
   });
 
   it(`should move card from stock to waste and all cards back to stock`, () => {
-    expect(boardComponent.waste.empty).toBeTruthy;
+    expect(boardComponentSUT.waste.empty()).toBeTruthy();
     do {
-      boardComponent.onNewCardClicked();
+      boardComponentSUT.onNewCardClicked();
       fixture.detectChanges();
-    } while (boardComponent.stock.size() > 0);
+    } while (boardComponentSUT.stock.size() > 0);
 
-    expect(boardComponent.waste.size() > 0).toBeTruthy;
+    expect(boardComponentSUT.waste.size() > 0).toBeTruthy();
 
-    boardComponent.onEmptyStockClicked();
+    boardComponentSUT.onEmptyStockClicked();
     fixture.detectChanges();
 
-    expect(boardComponent.waste.empty).toBeTruthy;
-    expect(boardComponent.stock.empty()).toBeFalsy;
+    expect(boardComponentSUT.waste.empty()).toBeTruthy();
+    expect(boardComponentSUT.stock.empty()).toBeFalsy();
   });
 
   it('should render 4 empty foundations', () => {
-    let foundations = compiledBoard.querySelectorAll('klondike-foundation');
+    let foundations = boardComponentSUTDOM.querySelectorAll('klondike-foundation');
     
     expect(foundations.length).toEqual(4);
     
@@ -74,7 +82,7 @@ describe('BoardComponent', () => {
   });
 
   it('should render 7 tableaus with first card visible', () => {
-    let tableaus = compiledBoard.querySelectorAll('klondike-tableau');
+    let tableaus = boardComponentSUTDOM.querySelectorAll('klondike-tableau');
 
     expect(tableaus.length).toEqual(7);
 

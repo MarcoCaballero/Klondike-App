@@ -4,12 +4,18 @@
     <mat-toolbar-row>
       <span>Klondike</span>
       <span class="timer">{{matchTimeString}}</span>
-      <button [@startGameAnimation]="isUp ? 'up': 'down'" mat-fab  class="start-button" color="primary" (click)="onStart()"> {{ isUp ? 'New Game': 'Restart' }}</button>
-      <button [@endGameAnimation]="isUp ? 'up': 'down'" [disabled]="isUp" mat-fab class="stop-button" (click)="onStop()">End</button>
     </mat-toolbar-row>
   </mat-toolbar>
 
   <klondike-board #board [isReady]="!isUp"></klondike-board>
 </div>
 
-<router-outlet></router-outlet>
+<button [@startGameAnimation]="isUp ? 'up': 'down'" mat-fab class="start-button" color="primary" (click)="onStart()">
+  {{ isUp ? 'New Game': 'Restart' }}</button>
+<button [@endGameAnimation]="isUp ? 'up': 'down'" [disabled]="isUp" mat-fab class="stop-button"
+  (click)="onStop()">End</button>
+
+<mat-radio-group *ngIf="isUp" [(ngModel)]="selectedMode" aria-label="Select an option">
+  <mat-radio-button aria-label="One cards at once" value="1" checked="true">One Card</mat-radio-button>
+  <mat-radio-button aria-label="Three cards at once" value="3">Three cards</mat-radio-button>
+</mat-radio-group>

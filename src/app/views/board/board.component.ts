@@ -1,15 +1,18 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, HostListener, Input } from '@angular/core';
-import { Board } from 'src/app/model/board';
-import { Card } from 'src/app/model/card';
-import { Foundation } from 'src/app/model/foundation';
-import { Stock } from 'src/app/model/stock';
-import { ALL_SUITS } from 'src/app/model/suit';
-import { Tableau } from 'src/app/model/tableau';
-import { Waste } from 'src/app/model/waste';
-import { MoveCardService } from 'src/app/services/move-card.service';
-import { StartService } from 'src/app/services/start.service';
+import { Board } from 'app/model/board';
+import { Card } from 'app/model/card';
+import { Foundation } from 'app/model/foundation';
+import { Stock } from 'app/model/stock';
+import { ALL_SUITS } from 'app/model/suit';
+import { Tableau } from 'app/model/tableau';
+import { Waste } from 'app/model/waste';
+import { MoveCardService } from 'app/services/move-card.service';
+import { StartService } from 'app/services/start.service';
+import { DoubleClickOnTableauEvent, DoubleClickOnWasteEvent } from 'app/views/events';
+import { Rank } from 'app/model/rank';
+import { GameService } from 'app/services/game.service';
 
 @Component({
   selector: 'klondike-board',
@@ -35,15 +38,17 @@ import { StartService } from 'src/app/services/start.service';
 export class BoardComponent {
   readonly TABLEAUS_SIZE: number = 7;
   readonly ALL_SUITS = ALL_SUITS;
-  readonly TABLEAU_REGEXP: RegExp = /(\w+)-(\d)-(\w+)/;
+  readonly TABLEAU_REGEXP: RegExp = /(tableau)-(\d)-(dropList)/;
 
   private _board: Board;
   private _isReady: boolean;
 
-  constructor(private _startService: StartService, private _moveCardService: MoveCardService) {
+  constructor(private _startService: StartService,
+    private _gameService: GameService,
+    private _moveCardService: MoveCardService) {
     this._board = this._startService.buildBoard();
   }
-  
+
   @Input()
   set isReady(isReady: boolean) {
     this._isReady = isReady;
@@ -61,54 +66,61 @@ export class BoardComponent {
 
   get tableaus(): Tableau[] { return this._board.tableaus; }
 
-  startGame(): void {
-    this._startService.start();
-  }
-
-  stopGame(): void {
-    this._startService.stop();
-  }
-  
   @HostListener('onNewCardClicked')
   onNewCardClicked(): void {
-    this._moveCardService.moveCardFromStockToWaste(this._board);
+    this._moveCardService.moveCardFromStockToWaste();
   }
 
   @HostListener('onEmptyStockClicked')
   onEmptyStockClicked(): void {
-    this._moveCardService.moveAllCardFromWasteToStock(this._board);
+    this._gameService.restoreStock();
   }
 
   @HostListener('onCardPushed')
   onCardPushed(event: CdkDragDrop<Card[]>): void {
-    let cardToMove: Card = event.item.data;
-    let previousContainerIdx: string = event.previousContainer.id;
-    let destinationContainerIdx: string = event.container.id;
-    if (this.isTableau(previousContainerIdx)) {
-      let originTableauIdx: number = this.getOriginFromDragListIdx(previousContainerIdx);
-      if (this.isTableau(destinationContainerIdx)){
-        let destinationTableauIdx: number = this.getOriginFromDragListIdx(destinationContainerIdx);
-        this._moveCardService.moveCardFromTableauToTableau(this._board, originTableauIdx, destinationTableauIdx, cardToMove);
-      } else{  
-        this._moveCardService.moveCardFromTableauToFoundation(this._board, originTableauIdx, cardToMove.suit);
+    let card: Card = event.item.data;
+    let originContainerId: string = event.previousContainer.id;
+    let destinationContainerId: string = event.container.id;
+    let hasTableauDestination: boolean = this._gameService.isTableau(destinationContainerId);
+    if (this._gameService.isTableau(originContainerId)) {
+      let originTableauIdx: number = this._gameService.getTableauIdFromDragRefId(originContainerId);
+      if (hasTableauDestination) {
+        let destinationTableauId: number = this._gameService.getTableauIdFromDragRefId(destinationContainerId);
+        this._moveCardService.moveCardFromTableauToTableau(originTableauIdx, destinationTableauId, card);
+      } else {
+        this._moveCardService.moveCardFromTableauToFoundation(originTableauIdx, card.suit);
       }
     } else { // Is from Waste
-      if (this.isTableau(destinationContainerIdx)){
-        let tableauIdx: number = this.getOriginFromDragListIdx(destinationContainerIdx);
-        this._moveCardService.moveCardFromWasteToTableau(this._board, tableauIdx);
+      if (hasTableauDestination) {
+        this._moveCardService.moveCardFromWasteToTableau(this._gameService.getTableauIdFromDragRefId(destinationContainerId));
       } else {
-        this._moveCardService.moveCardFromWasteToFoundation(this._board, cardToMove.suit);
+        this._moveCardService.moveCardFromWasteToFoundation(card.suit);
       }
     }
-
   }
 
-  private isTableau(idx: string): boolean {
-    return this.TABLEAU_REGEXP.test(idx);
+  @HostListener('onTableauDoubleClicked')
+  onTableauDoubleClicked(event: DoubleClickOnTableauEvent) {
+    if (this._gameService.isAllowedPushToFoundation(event.card)) {
+      this._moveCardService.moveCardFromTableauToFoundation(event.tableau.idx, event.card.suit);
+    } else {
+      let tableaus: Array<Tableau> = (event.card.rank == Rank.KING) ?
+        this._gameService.getEmptyTableaus().filter((tableau: Tableau) => tableau.idx != event.tableau.idx) : this._gameService.getAllowedToPushTableaus(event.card);
+      if (tableaus.length > 0) {
+        this._moveCardService.moveCardFromTableauToTableau(event.tableau.idx, tableaus[0].idx, event.card)
+      }
+    }
   }
 
-  private getOriginFromDragListIdx(idx: string): number {
-    // Symbol + parses to number some string
-    return +idx.replace(this.TABLEAU_REGEXP, "$2");
+  @HostListener('onWasteDoubleClicked')
+  onWasteDoubleClicked(event: DoubleClickOnWasteEvent): void {
+    if (this._gameService.isAllowedPushToFoundation(event.card)) {
+      this._moveCardService.moveCardFromWasteToFoundation(event.card.suit);
+    } else {
+      let tableaus: Array<Tableau> = (event.card.rank == Rank.KING) ? this._gameService.getEmptyTableaus() : this._gameService.getAllowedToPushTableaus(event.card);
+      if (tableaus.length > 0) {
+        this._moveCardService.moveCardFromWasteToTableau(tableaus[0].idx);
+      }
+    }
   }
 }

@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Card } from 'src/app/model/card';
-import { Waste } from 'src/app/model/waste';
-import { DragDropService } from 'src/app/services/ui-utils/drag-drop.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Card } from 'app/model/card';
+import { Waste } from 'app/model/waste';
+import { DragDropService } from 'app/services/ui-utils/drag-drop.service';
+import { DoubleClickOnWasteEvent } from 'app/views/events';
 import { BaseDragDropComponent } from '../base-drag-drop/base-drag-drop.component';
-
 
 let visible = (v: boolean): boolean => v;
 
@@ -15,7 +15,7 @@ let visible = (v: boolean): boolean => v;
 })
 
 export class WasteComponent extends BaseDragDropComponent implements OnInit {
-
+  @Output() doubleClicked: EventEmitter<DoubleClickOnWasteEvent> = new EventEmitter();
   _waste: Waste;
 
   @Input()
@@ -36,5 +36,9 @@ export class WasteComponent extends BaseDragDropComponent implements OnInit {
 
   onDrop(event: CdkDragDrop<Card[]>): void {
     event.item.reset();
+  }
+
+  onCardDClick(card: Card): void {
+    this.doubleClicked.emit({waste: this._waste, card: card});
   }
 }

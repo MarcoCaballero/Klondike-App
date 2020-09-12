@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "http-server ./src/assets && ng test",
+    "test": "ng test",
+    "test --with-assets": "http-server ./src/assets && ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

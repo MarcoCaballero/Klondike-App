@@ -30,7 +30,8 @@
               "src/styles.scss",
               "src/klondike-theme.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "es5BrowserSupport": true
           },
           "configurations": {
             "production": {

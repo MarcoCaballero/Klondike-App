@@ -19,7 +19,7 @@ jobs:
       before_script: 
         - npm i -g karma
         - npm i
-      script: ng test
+      script: karma start karma.conf.js --single-run
     - # stage name not required, parallel jobs
       language: node_js
       node_js: "12.3.1" 

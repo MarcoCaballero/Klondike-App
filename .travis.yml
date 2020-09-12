@@ -5,12 +5,7 @@ services:
   - docker
 
 addons:
-  apt:
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
-      - google-chrome-beta
+  chrome: stable
 
 cache:
   directories:
@@ -27,7 +22,7 @@ jobs:
       script: ng test
     - # stage name not required, parallel jobs
       language: node_js
-      node_js: "8.11.1"    
+      node_js: "12.3.1" 
       before_script: 
         - npm i
       script: ng e2e 

@@ -1,0 +1,48 @@
+sudo: true
+dist: trusty
+
+services:
+  - docker
+
+addons:
+  chrome: beta
+
+cache:
+  directories:
+    - ./node_modules      
+
+before_install:
+  - export CHROME_BIN=chromium-browser
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
+jobs:
+  include:
+    - stage: Unit Test & e2e Test
+      language: node_js
+      node_js: "12.3.1"
+      before_script: 
+        - npm i -g karma
+        - npm i
+      script: karma start src/karma.conf.js --single-run
+    - # stage name not required, parallel jobs
+      language: node_js
+      node_js: "12.3.1" 
+      before_script: 
+        - npm i
+      script: ng e2e 
+    - stage: Build & Release Docker images
+      script:
+        - echo "Building image marcocab/Klondike-app:dev..." 
+        - docker build -t marcocab/Klondike-app:dev
+        - echo "done." 
+        - echo "Building tag marcocab/Klondike-app:dev --> marcocab/Klondike-app:latest..." 
+        - docker tag marcocab/Klondike-app:dev marcocab/Klondike-app:latest
+        - echo "done." 
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin 
+        - echo "Push marcocab/Klondike-app:dev..." 
+        - docker push marcocab/Klondike-app:dev
+        - echo "done." 
+        - echo "Push marcocab/Klondike-app:latest..." 
+        - docker push marcocab/Klondike-app:latest
+        - echo "done." 

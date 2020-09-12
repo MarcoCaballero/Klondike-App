@@ -21,7 +21,6 @@ describe('BoardComponent', () => {
     let app: AppComponent = TestBed.get(AppComponent);
     app.onStart();
     boardComponentSUT.isReady = true;
-    // startService.start();
     fixture.detectChanges();
   });
 

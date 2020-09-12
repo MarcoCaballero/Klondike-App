@@ -20,6 +20,25 @@ $warn: map-get($klondike-app-theme, klondike-app-warn);
     top: 87%;
   }
 
+  .game-mode-button {
+    position: absolute;
+    position: absolute;
+    height: 75px;
+    width: 75px;
+    top: 58%;
+    left: 48.9%;
+    z-index: 100;
+    color: white;
+
+    &.easy {
+      background-color: #8BC34A;
+    }
+
+    &.hard {
+      background-color: mat-color($klondike-app-warn);
+    }
+  }
+
   .stop-button {
     background-color: mat-color($klondike-app-warn, darker);
     color: white;
@@ -32,8 +51,44 @@ $warn: map-get($klondike-app-theme, klondike-app-warn);
     position: absolute;
     top: 80%;
     left: 40%;
-    .mat-radio-button ~ .mat-radio-button {
+
+    .mat-radio-button~.mat-radio-button {
       margin-left: 16px;
+    }
+  }
+
+  mat-button-toggle-group {
+    position: absolute;
+    border: transparent;
+    top: 70%;
+    left: 40.5%;
+    height: 120px;
+
+    mat-button-toggle {
+      border-radius: 5%;
+      margin: 5%;
+      color: transparent;
+
+      &.enabled {
+        opacity: 1;
+      }
+
+      &.disabled {
+        opacity: 0.5;
+      }
+
+      &:nth-child(1) {
+        // background: url(../../assets/cards/spades/1.svg) no-repeat;
+        background: url("../../assets/cards/diamonds/1.svg") no-repeat;
+        width: 100px;
+      }
+
+      &:nth-child(2) {
+        background-image: url("../../assets/cards/spades/11.svg"), url("../../assets/cards/hearts/12.svg"), url("../../assets/cards/clubs/13.svg");
+        background-position: right bottom, center bottom, left top;
+        background-repeat: no-repeat, no-repeat, no-repeat;
+        width: 200px;
+      }
     }
   }
 }

@@ -22,14 +22,13 @@ export class StartService {
 
   get gameMode(): GameMode { return this._gameMode; }
 
-  set gameMode(gameMode: GameMode) { this._gameMode = gameMode; }
-
   buildBoard(): Board {
     this._board.buildFoundations();
     return this._board;
   }
 
-  start(): void {
+  start(gameMode: GameMode): void {
+    this._gameMode = gameMode;
     this._board.clean();
     this._board.buildStock();
     this._board.buildFoundations();

@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { StartService } from './start.service';
 import { Board } from '../model/board';
+import { GameMode } from 'app/model/game-mode';
 
 describe('StartService', () => {
   let board : Board;
@@ -9,7 +10,7 @@ describe('StartService', () => {
   beforeEach(() => { 
     startService = new StartService();
     board = startService.buildBoard();
-    startService.start();
+    startService.start(GameMode.ONE_CARD_MODE);
   });
   afterEach(() => {
     startService = null; 

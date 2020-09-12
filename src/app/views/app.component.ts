@@ -57,6 +57,23 @@ interface IconData {
         animate('500ms cubic-bezier(0, 0, 0.25, 1)')
       ]),
     ]),
+    // Gme mode
+    trigger('gameModeAnimation', [
+      state('up', style({
+        opacity: '100',
+        'z-index': '100'
+      })),
+      state('down', style({
+        opacity: '0',
+        'z-index': '100'
+      })),
+      transition('up => down', [
+        animate('500ms cubic-bezier(0.35, 0, 0.25, 1)')
+      ]),
+      transition('down => up', [
+        animate('500ms cubic-bezier(0, 0, 0.25, 1)')
+      ]),
+    ]),
   ]
 })
 export class AppComponent {
@@ -71,7 +88,7 @@ export class AppComponent {
   millisFromStart: number = 0;
   matchTimeString: string = '0:00:00';
   selectedMode: string = GameMode.ONE_CARD_MODE;
-  public isUp: boolean = true;
+  public isNewGameButtonShown: boolean = true;
 
   constructor(private iconRegistry: MatIconRegistry,
               private sanitizer: DomSanitizer,
@@ -80,21 +97,21 @@ export class AppComponent {
   }
 
   onStart(): void {
-    this._startService.gameMode = GetGameMode(this.selectedMode);
-    this.isUp = false;
-    this.timer = setInterval(() => {
-      this.millisFromStart += 100;
-      this.updateTime();
-    }, 100);
-    this._startService.start();
+    this.hideNewGameButton();
+    this.setGameTimer();
+    this._startService.start(GetGameMode(this.selectedMode));
   }
 
   onStop(): void {
-    this.isUp = true;
+    this.showNewGameButton();
     clearInterval(this.timer);
-    this.millisFromStart = 0;
+    this.resetGameTimer();
     this.updateTime();
     this._startService.stop();
+  }
+
+  isOneModeEnabled(): boolean {
+    return this.selectedMode == GameMode.ONE_CARD_MODE;
   }
 
   private updateTime(): void {
@@ -115,4 +132,25 @@ export class AppComponent {
         this.sanitizer.bypassSecurityTrustResourceUrl(`../../assets/${icon.path}`));
     });
   }
+
+  private hideNewGameButton(): void {
+    this.isNewGameButtonShown = false;
+  }
+
+  private showNewGameButton(): void {
+    this.isNewGameButtonShown = true;
+  }
+
+  private setGameTimer(): void {
+    this.millisFromStart = 0;
+    this.timer = setInterval(() => {
+      this.millisFromStart += 100;
+      this.updateTime();
+    }, 100);
+  }
+
+  private resetGameTimer(): void {
+    this.millisFromStart = 0;
+  }
+
 }

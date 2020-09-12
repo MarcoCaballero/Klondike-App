@@ -10,7 +10,24 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to klondike-app!');
+    expect(page.getTitleText()).toEqual('Klondike');
+  });
+
+  it('should have new game button ready', () => {
+    page.navigateTo();
+    expect(page.getButtonStartText()).toEqual('New Game');
+  });
+
+  it('should have new game configured for one card', () => {
+    page.navigateTo();
+    expect(page.getButtonGameModeText()).toEqual('One card');
+  });
+
+  it('should be configured for three cards when clicking it', () => {
+    page.navigateTo();
+    expect(page.getButtonGameModeText()).toEqual('One card');
+    page.clickThreeCardMode();
+    expect(page.getButtonGameModeText()).toEqual('Three cards');
   });
 
   afterEach(async () => {

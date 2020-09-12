@@ -7,15 +7,24 @@
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <klondike-board #board [isReady]="!isUp"></klondike-board>
+  <klondike-board #board [isReady]="!isNewGameButtonShown"></klondike-board>
 </div>
 
-<button [@startGameAnimation]="isUp ? 'up': 'down'" mat-fab class="start-button" color="primary" (click)="onStart()">
-  {{ isUp ? 'New Game': 'Restart' }}</button>
-<button [@endGameAnimation]="isUp ? 'up': 'down'" [disabled]="isUp" mat-fab class="stop-button"
-  (click)="onStop()">End</button>
+<button [@startGameAnimation]="isNewGameButtonShown ? 'up': 'down'" mat-fab class="start-button" color="primary"
+  (click)="onStart()">
+  {{ isNewGameButtonShown ? 'New Game': 'Restart' }}</button>
+<button [@gameModeAnimation]="isNewGameButtonShown ? 'up': 'down'" mat-fab class="game-mode-button"
+  [ngClass]="{'easy': isOneModeEnabled(), 'hard': !isOneModeEnabled()}" (click)="onStart()">
+  {{ isOneModeEnabled() ? 'One card': 'Three cards' }}</button>
+<button [@endGameAnimation]="isNewGameButtonShown ? 'up': 'down'" [disabled]="isNewGameButtonShown" mat-fab
+  class="stop-button" (click)="onStop()">End</button>
 
-<mat-radio-group *ngIf="isUp" [(ngModel)]="selectedMode" aria-label="Select an option">
-  <mat-radio-button aria-label="One cards at once" value="1" checked="true">One Card</mat-radio-button>
-  <mat-radio-button aria-label="Three cards at once" value="3">Three cards</mat-radio-button>
-</mat-radio-group>
+
+
+<mat-button-toggle-group *ngIf="isNewGameButtonShown" [(ngModel)]="selectedMode" name="fontStyle"
+  aria-label="Font Style">
+  <mat-button-toggle [ngClass]="{'enabled': isOneModeEnabled(), 'disabled': !isOneModeEnabled()}" value="1">One card
+  </mat-button-toggle>
+  <mat-button-toggle [ngClass]="{'enabled': !isOneModeEnabled(), 'disabled': isOneModeEnabled()}" value="3">Three cards
+  </mat-button-toggle>
+</mat-button-toggle-group>

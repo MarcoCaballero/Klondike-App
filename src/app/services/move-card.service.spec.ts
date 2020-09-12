@@ -21,9 +21,8 @@ describe('MoveCardService', () => {
     gameService = TestBed.get(GameService);
     let startService: StartService = TestBed.get(StartService);
 
-    startService.gameMode = GameMode.ONE_CARD_MODE;
     board = startService.buildBoard();
-    startService.start();
+    startService.start(GameMode.ONE_CARD_MODE);
   });
 
   it('should create an instance', () => {

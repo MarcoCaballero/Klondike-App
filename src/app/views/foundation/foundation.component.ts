@@ -11,7 +11,7 @@ import { Suit } from 'app/model/suit';
 })
 export class FoundationComponent implements OnInit {
   @Output() cardPush: EventEmitter<CdkDragDrop<Card[]>> = new EventEmitter();
-  readonly IMAGE_BASE_NAMESPACE: string = 'klondike-assets'
+  readonly IMAGE_BASE_NAMESPACE: string = 'klondike-assets';
 
   private _foundation: Foundation;
 
@@ -42,7 +42,7 @@ export class FoundationComponent implements OnInit {
   }
 
   onDrop(event: CdkDragDrop<Card[]>) {
-    let cardToMove: Card = event.item.data;
+    const cardToMove: Card = event.item.data;
     if (this.isAllowedPushUI(event) && this.isAllowedPush(cardToMove)) {
       this.cardPush.emit(event);
     } else {

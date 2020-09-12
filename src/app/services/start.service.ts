@@ -18,7 +18,7 @@ export class StartService {
     this._board = new Board();
   }
 
-  get board(): Board { return this._board }
+  get board(): Board { return this._board; }
 
   get gameMode(): GameMode { return this._gameMode; }
 

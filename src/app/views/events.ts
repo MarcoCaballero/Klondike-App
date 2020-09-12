@@ -3,11 +3,11 @@ import { Tableau } from 'app/model/tableau';
 import { Waste } from 'app/model/waste';
 
 export interface DoubleClickOnTableauEvent {
-    tableau: Tableau,
-    card: Card
+    tableau: Tableau;
+    card: Card;
 }
 
 export interface DoubleClickOnWasteEvent {
-    waste: Waste,
-    card: Card
+    waste: Waste;
+    card: Card;
 }

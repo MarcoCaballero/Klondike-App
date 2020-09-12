@@ -43,9 +43,9 @@ export class Board {
     dealToTableaus(): void {
         this._tableaus = [];
         for (let i = 0; i < this.TABLEAUS_SIZE; i++) {
-            let cards: Card[] = [];
+            const cards: Card[] = [];
             for (let j = 0; j <= i; j++) {
-                let card: Card = this._stock.pop();
+                const card: Card = this._stock.pop();
                 if (j === i) {
                     card.show();
                 }
@@ -60,10 +60,11 @@ export class Board {
     }
 
     popCurrentTableauCard(tableauIdx: number): Card {
-        let tableau: Tableau = this.getTableauByIdx(tableauIdx);
+        const tableau: Tableau = this.getTableauByIdx(tableauIdx);
         const poppedCard: Card = tableau.pop();
-        if (!tableau.empty())
+        if (!tableau.empty()) {
             tableau.tail().show();
+        }
         return poppedCard;
     }
 
@@ -72,21 +73,21 @@ export class Board {
     }
 
     moveCardToTableau(card: Card, tableauIdx: number): void {
-        let tableau: Tableau = this.getTableauByIdx(tableauIdx);
+        const tableau: Tableau = this.getTableauByIdx(tableauIdx);
         tableau.push(card);
     }
 
     moveCardsToTableau(cardList: Array<Card>, tableauIdx: number): void {
-        let tableau: Tableau = this.getTableauByIdx(tableauIdx);
+        const tableau: Tableau = this.getTableauByIdx(tableauIdx);
         while (cardList.length > 0) {
             tableau.push(cardList.pop());
         }
     }
 
     moveCardToWaste(gameMode: GameMode): void {
-        let counter: number = 0;
+        let counter = 0;
         while (counter < +gameMode) {
-            let card: Card = this._stock.pop();
+            const card: Card = this._stock.pop();
             card.show();
             this._waste.push(card);
             counter++;
@@ -95,7 +96,7 @@ export class Board {
 
     restoreStockFromWaste(): void {
         while (!this.waste.empty()) {
-            let card: Card = this.waste.pop();
+            const card: Card = this.waste.pop();
             card.hide();
             this._stock.push(card);
         }

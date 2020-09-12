@@ -28,10 +28,10 @@ export class MoveCardService {
   }
 
   moveCardFromTableauToTableau(tableauOriginIdx: number, tableauDestinationIdx: number, cardToMove: Card): void {
-    let _cardList: Card[] = [];
+    const _cardList: Card[] = [];
     let _cardToMove: Card;
     do {
-      _cardToMove = this._board.popCurrentTableauCard(tableauOriginIdx)
+      _cardToMove = this._board.popCurrentTableauCard(tableauOriginIdx);
       _cardList.push(_cardToMove);
     } while (_cardToMove != cardToMove);
     this._board.moveCardsToTableau(_cardList, tableauDestinationIdx);

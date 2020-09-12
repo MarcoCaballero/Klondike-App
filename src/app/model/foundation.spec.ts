@@ -4,21 +4,21 @@ import { Rank } from './rank';
 import { Suit } from './suit';
 
 describe('Foundation', () => {
-  let foundation : Foundation
-  let card1 : Card;
+  let foundation: Foundation;
+  let card1: Card;
 
-  beforeEach(() => { 
+  beforeEach(() => {
       foundation = new Foundation(Suit.DIAMONDS);
     });
-  afterEach(() => { 
+  afterEach(() => {
       foundation = null;
     });
   it('should create an instance', () => {
-      expect(foundation).toBeTruthy()
+      expect(foundation).toBeTruthy();
   });
   it('should be empty', () => {
       expect(foundation.empty()).toBeTruthy();
-  }); 
+  });
   it('should take an ordered card', () => {
       card1 = new Card(Rank.ACE, Suit.DIAMONDS, true);
       foundation.push(card1);

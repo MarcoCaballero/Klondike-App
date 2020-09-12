@@ -1,5 +1,5 @@
 /* Material Modules */
-import { MatToolbarModule } from '@angular/material/toolbar'
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,8 +16,8 @@ export const ANGULAR_MATERIAL_MODULES: any[] = [
     MatIconModule,
     MatRadioModule,
     MatButtonToggleModule
-]
+];
 
 export const ANGULAR_CDK_MODULES: any[] = [
     DragDropModule
-]
+];

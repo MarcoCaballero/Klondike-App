@@ -7,7 +7,7 @@ node_js:
   - 12.4.0
 
 addons:
-  chrome: beta
+  chrome: stable
 
 before_script:
   - set -e
@@ -17,5 +17,6 @@ before_script:
   - sleep 3
 
 script:
+  - ng lint
   - ng test --watch=false
   - npm run e2e

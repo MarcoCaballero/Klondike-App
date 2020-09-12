@@ -19,7 +19,7 @@ describe('MoveCardService', () => {
   beforeEach(() => {
     moveCardService = TestBed.get(MoveCardService);
     gameService = TestBed.get(GameService);
-    let startService: StartService = TestBed.get(StartService);
+    const startService: StartService = TestBed.get(StartService);
 
     board = startService.buildBoard();
     startService.start(GameMode.ONE_CARD_MODE);
@@ -49,7 +49,7 @@ describe('MoveCardService', () => {
   });
 
   it('should  move cards form tableau to fundation', () => {
-    let tableauId: number = 1;
+    const tableauId = 1;
     board.moveCardToTableau(new Card(Rank.ACE, Suit.CLUBS, true), tableauId);
 
     moveCardService.moveCardFromTableauToFoundation(tableauId, Suit.CLUBS);
@@ -68,19 +68,19 @@ describe('MoveCardService', () => {
   });
 
   it('should move a form waste to tableaus', () => {
-    let tableauId: number = 7;
+    const tableauId = 7;
     card = new Card(Rank.TWO, Suit.CLUBS, true);
     board._waste.push(card);
 
     moveCardService.moveCardFromWasteToTableau(tableauId);
 
-    let tableau: Tableau = board._tableaus.filter(tableau => tableau.idx === tableauId)[0];
+    const tableau: Tableau = board._tableaus.filter(tableau => tableau.idx === tableauId)[0];
     expect(tableau.pop() === card).toBeTruthy();
   });
 
   it('should move multiple cards form tableau to tableau', () => {
-    let tableauOri: number = 1;
-    let tableauDest: number = 2;
+    const tableauOri = 1;
+    const tableauDest = 2;
     card = new Card(Rank.ACE, Suit.CLUBS, true);
 
     board.moveCardToTableau(card, tableauOri);
@@ -100,8 +100,8 @@ describe('MoveCardService', () => {
   });
 
   it('should move one card form tableau to tableau', () => {
-    let tableauOri: number = 2;
-    let tableauDest: number = 3;
+    const tableauOri = 2;
+    const tableauDest = 3;
     card = new Card(Rank.ACE, Suit.CLUBS, false);
 
     board.moveCardToTableau(card, tableauOri);

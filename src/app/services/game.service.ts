@@ -18,8 +18,8 @@ export class GameService {
         this._board = this._startService.board;
     }
 
-    get board(): Board { return this._board }
-    
+    get board(): Board { return this._board; }
+
     get gameMode(): GameMode { return this._startService.gameMode; }
 
     getEmptyTableaus(): Array<Tableau> { return this._board.getEmptyTableaus(); }
@@ -30,7 +30,7 @@ export class GameService {
 
     getTableauIdFromDragRefId(dragRefId: string): number {
         // Symbol + parses to number some string
-        return +dragRefId.replace(this.TABLEAU_REGEXP, "$2");
+        return +dragRefId.replace(this.TABLEAU_REGEXP, '$2');
     }
 
     isTableau(idx: string): boolean {
@@ -38,7 +38,7 @@ export class GameService {
     }
 
     isAllowedPushToFoundation(card: Card): boolean {
-        let foundation: Foundation = this._board.getFoundationBySuit(card.suit);
+        const foundation: Foundation = this._board.getFoundationBySuit(card.suit);
         return foundation.isAllowedPush(card);
     }
 

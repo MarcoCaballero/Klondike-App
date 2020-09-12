@@ -27,8 +27,8 @@ export class TableauComponent extends BaseDragDropComponent implements OnInit {
   get idx(): number { return this._tableau.idx; }
 
   constructor(public dragDropService: DragDropService,
-    private _moveCardService: MoveCardService,
-    private _elementDOM: ElementRef) {
+              private _moveCardService: MoveCardService,
+              private _elementDOM: ElementRef) {
     super(dragDropService);
   }
 
@@ -40,7 +40,7 @@ export class TableauComponent extends BaseDragDropComponent implements OnInit {
   }
 
   onDrop(event: CdkDragDrop<Card[]>): void {
-    let cardToMove: Card = event.item.data;
+    const cardToMove: Card = event.item.data;
     if (this.isAllowedPushUI(event) && this.isAllowedPush(cardToMove)) {
       this.cardPush.emit(event);
     } else {
@@ -49,7 +49,7 @@ export class TableauComponent extends BaseDragDropComponent implements OnInit {
   }
 
   onCardDClick(card: Card): void {
-    this.doubleClicked.emit({tableau: this._tableau, card: card});
+    this.doubleClicked.emit({tableau: this._tableau, card});
   }
 
   private isAllowedPush(card): boolean {

@@ -6,8 +6,8 @@ import { StartService } from 'app/services/start.service';
 import { GameMode, GetGameMode } from 'app/model/game-mode';
 
 interface IconData {
-  name: string,
-  path: string
+  name: string;
+  path: string;
 }
 
 @Component({
@@ -85,10 +85,10 @@ export class AppComponent {
     { name: 'spades', path: 'cards/spades.svg' },
     { name: 'clubs', path: 'cards/clubs.svg' }
   ];
-  millisFromStart: number = 0;
-  matchTimeString: string = '0:00:00';
+  millisFromStart = 0;
+  matchTimeString = '0:00:00';
   selectedMode: string = GameMode.ONE_CARD_MODE;
-  public isNewGameButtonShown: boolean = true;
+  public isNewGameButtonShown = true;
 
   constructor(private iconRegistry: MatIconRegistry,
               private sanitizer: DomSanitizer,
@@ -115,9 +115,9 @@ export class AppComponent {
   }
 
   private updateTime(): void {
-    let hours: number = Math.floor(this.millisFromStart / (1000 * 60 * 60) % 60);
-    let minutes: number = Math.floor(this.millisFromStart / (1000 * 60) % 60);
-    let seconds: number = Math.floor(this.millisFromStart / 1000 % 60);
+    const hours: number = Math.floor(this.millisFromStart / (1000 * 60 * 60) % 60);
+    const minutes: number = Math.floor(this.millisFromStart / (1000 * 60) % 60);
+    const seconds: number = Math.floor(this.millisFromStart / 1000 % 60);
 
     this.matchTimeString = `${hours}:${this.getFormatedField(minutes)}:${this.getFormatedField(seconds)}`;
   }

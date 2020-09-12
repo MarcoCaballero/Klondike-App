@@ -23,7 +23,7 @@ describe('StockComponent', () => {
   });
 
   it('should render the stock full of cards backed', () => {
-    let allCards: any = stock_DOM_SUT.querySelectorAll('klondike-card');
+    const allCards: any = stock_DOM_SUT.querySelectorAll('klondike-card');
 
     expect(allCards.length).toEqual(52);
     allCards.forEach((card: any) => {
@@ -33,7 +33,7 @@ describe('StockComponent', () => {
 
   it('should emit the event `newCardClick` when the top card is clicked', fakeAsync(() => {
     spyOn(stock_SUT.newCardClick, 'emit');
-    let allCards: any = stock_DOM_SUT.querySelectorAll('klondike-card');
+    const allCards: any = stock_DOM_SUT.querySelectorAll('klondike-card');
     expect(allCards.length).toEqual(52);
 
     allCards[(allCards.length - 1)].click();

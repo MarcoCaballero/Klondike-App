@@ -18,11 +18,11 @@ export class AppPage {
   }
 
   clickOneCardMode() {
-    element(by.css('#mat-button-toggle-1-button')).click()
+    element(by.css('#mat-button-toggle-1-button')).click();
   }
-  
+
   clickThreeCardMode() {
-    element(by.css('#mat-button-toggle-2-button')).click()
+    element(by.css('#mat-button-toggle-2-button')).click();
   }
-  
+
 }

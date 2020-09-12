@@ -1,11 +1,11 @@
 import { Waste } from './waste';
 
 describe('Waste', () => {
-    let waste : Waste;
-    beforeEach(() => { 
+    let waste: Waste;
+    beforeEach(() => {
         waste = new Waste();
       });
-    afterEach(() => { 
+    afterEach(() => {
         waste = null;
       });
 

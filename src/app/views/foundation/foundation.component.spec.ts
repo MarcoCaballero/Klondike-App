@@ -11,7 +11,7 @@ describe('FoundationComponent', () => {
   let fixture: ComponentFixture<FoundationComponent>;
   let foundation_SUT: FoundationComponent;
   let foundation_DOM_SUT: any;
-  let foundation: Foundation = new Foundation(Suit.CLUBS);
+  const foundation: Foundation = new Foundation(Suit.CLUBS);
 
   beforeEach(() => {
     TestBed.configureTestingModule(TESTING_MODULE_METADATA).compileComponents();

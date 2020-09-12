@@ -34,7 +34,7 @@ export class StockComponent {
   @Output() newCardClick: EventEmitter<boolean> = new EventEmitter();
   @Output() emptyStockClick: EventEmitter<boolean> = new EventEmitter();
 
-  _slideToWaste: boolean = false;
+  _slideToWaste = false;
   _stock: Stock;
 
   constructor(private _gameService: GameService) {
@@ -60,7 +60,7 @@ export class StockComponent {
   }
 
   isSlidingToWaste(i: number): boolean {
-    return this._slideToWaste && (i >= (this.cards.length - 1))
+    return this._slideToWaste && (i >= (this.cards.length - 1));
   }
 
   private isSlidingOFF() {

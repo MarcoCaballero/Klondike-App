@@ -1,13 +1,13 @@
 import { Stock } from './stock';
 
 describe('Stock', () => {
-  let stock : Stock;
-  
-  beforeEach(() => { 
+  let stock: Stock;
+
+  beforeEach(() => {
     stock = new Stock();
   });
-  
-  afterEach(() => { 
+
+  afterEach(() => {
     stock = null;
   });
 

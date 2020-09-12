@@ -6,7 +6,7 @@ import { DragDropService } from 'app/services/ui-utils/drag-drop.service';
 import { DoubleClickOnWasteEvent } from 'app/views/events';
 import { BaseDragDropComponent } from '../base-drag-drop/base-drag-drop.component';
 
-let visible = (v: boolean): boolean => v;
+const visible = (v: boolean): boolean => v;
 
 @Component({
   selector: 'klondike-waste',
@@ -39,6 +39,6 @@ export class WasteComponent extends BaseDragDropComponent implements OnInit {
   }
 
   onCardDClick(card: Card): void {
-    this.doubleClicked.emit({waste: this._waste, card: card});
+    this.doubleClicked.emit({waste: this._waste, card});
   }
 }

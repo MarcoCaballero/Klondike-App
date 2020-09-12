@@ -20,7 +20,7 @@ describe('AppComponent', () => {
     done();
   });
 
-  it("should have as title 'klondike-app'", async (done) => {
+  it('should have as title \'klondike-app\'', async (done) => {
     expect(app_SUT.title).toEqual('klondike-app');
     done();
   });
@@ -37,7 +37,7 @@ describe('AppComponent', () => {
 
   it('should render a stock with cards and a waste with no cards', async (done) => {
 
-    let buttons = fixture.debugElement.nativeElement.querySelectorAll('button');
+    const buttons = fixture.debugElement.nativeElement.querySelectorAll('button');
     expect(buttons[0].firstElementChild.textContent).toEqual(' New Game');
     buttons[0].click();
     fixture.detectChanges();
@@ -50,40 +50,39 @@ describe('AppComponent', () => {
       expect(app_DOM_SUT.querySelector('klondike-stock').querySelectorAll('klondike-card').length).toBeGreaterThan(0);
       buttons[1].click();
       fixture.detectChanges();
-      expect(buttons[0].firstElementChild.textContent).toEqual("New Game");
+      expect(buttons[0].firstElementChild.textContent).toEqual('New Game');
     });
 
     done();
   });
 
   it('should render 4 empty foundations', async (done) => {
-    let foundation = app_DOM_SUT.querySelectorAll('klondike-foundation');
+    const foundation = app_DOM_SUT.querySelectorAll('klondike-foundation');
     for (let x = 0; x < foundation.length; x++) {
       expect(foundation[x].querySelectorAll('klondike-card').length).toEqual(0);
-    };
+    }
     expect(foundation.length).toEqual(4);
     done();
   });
 
   it('should render 7 tableaus with first card visible', async (done) => {
-    let buttons = fixture.debugElement.nativeElement.querySelectorAll('button');
+    const buttons = fixture.debugElement.nativeElement.querySelectorAll('button');
     expect(buttons[0].firstElementChild.textContent).toEqual(' New Game');
     buttons[0].click();
     fixture.detectChanges();
 
     fixture.whenStable().then(() => {
-      let tableaus = app_DOM_SUT.querySelectorAll('klondike-tableau');
+      const tableaus = app_DOM_SUT.querySelectorAll('klondike-tableau');
       for (let x = 0; x < tableaus.length; x++) {
-        let cards = tableaus[x].querySelectorAll('klondike-card')
+        const cards = tableaus[x].querySelectorAll('klondike-card');
         for (let y = 0; y < cards.length; y++) {
           if (y === cards.length - 1) {
             expect(cards[y].querySelector('div').style.background).not.toContain('back.svg');
-          }
-          else {
+          } else {
             expect(cards[y].querySelector('div').style.background).toContain('back.svg');
           }
         }
-      };
+      }
       expect(tableaus.length).toEqual(7);
       buttons[1].click();
     });

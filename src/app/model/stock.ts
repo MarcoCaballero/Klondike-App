@@ -21,8 +21,8 @@ export class Stock {
 
     shuffle(): void {
         for (let i = 0; i < this._cards.length; i++) {
-            let card: Card = this._cards[i];
-            let randomIndex: number = Math.floor(Math.random() * (i + 1));
+            const card: Card = this._cards[i];
+            const randomIndex: number = Math.floor(Math.random() * (i + 1));
 
             this._cards[i] = this._cards[randomIndex];
             this._cards[randomIndex] = card;
@@ -41,7 +41,7 @@ export class Stock {
         return this._cards[0];
     }
 
-    tail() : Card {
+    tail(): Card {
         return this._cards[this._cards.length - 1];
     }
 

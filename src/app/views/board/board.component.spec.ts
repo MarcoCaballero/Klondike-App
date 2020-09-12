@@ -18,14 +18,14 @@ describe('BoardComponent', () => {
     boardComponentSUTDOM = fixture.nativeElement;
     fixture.detectChanges();
     fixture.detectChanges();
-    let app: AppComponent = TestBed.get(AppComponent);
+    const app: AppComponent = TestBed.get(AppComponent);
     app.onStart();
     boardComponentSUT.isReady = true;
     fixture.detectChanges();
   });
 
   afterEach(() => {
-    let app: AppComponent = TestBed.get(AppComponent);
+    const app: AppComponent = TestBed.get(AppComponent);
     app.onStop();
     fixture.detectChanges();
   });
@@ -71,25 +71,25 @@ describe('BoardComponent', () => {
   });
 
   it('should render 4 empty foundations', () => {
-    let foundations = boardComponentSUTDOM.querySelectorAll('klondike-foundation');
-    
+    const foundations = boardComponentSUTDOM.querySelectorAll('klondike-foundation');
+
     expect(foundations.length).toEqual(4);
-    
+
     foundations.forEach(foundation => {
       expect(foundation.querySelectorAll('klondike-card').length).toEqual(0);
     });
   });
 
   it('should render 7 tableaus with first card visible', () => {
-    let tableaus = boardComponentSUTDOM.querySelectorAll('klondike-tableau');
+    const tableaus = boardComponentSUTDOM.querySelectorAll('klondike-tableau');
 
     expect(tableaus.length).toEqual(7);
 
     tableaus.forEach(tableau => {
-      let cards = tableau.querySelectorAll('klondike-card');
+      const cards = tableau.querySelectorAll('klondike-card');
 
       cards.forEach((card, idx) => {
-        let backgorundStyle = card.querySelector('div').style.background;
+        const backgorundStyle = card.querySelector('div').style.background;
 
         if (idx === cards.length - 1) {
           expect(backgorundStyle).not.toContain('back.svg');
@@ -101,4 +101,4 @@ describe('BoardComponent', () => {
     });
   });
 
-}); 
+});

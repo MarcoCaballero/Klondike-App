@@ -4,14 +4,14 @@ import { Rank } from './rank';
 import { Suit } from './suit';
 
 describe('Tableau', () => {
-    let tableau : Tableau;
-    let card1 : Card;
-    let card2 : Card;
-    let card3 : Card;
-    beforeEach(() => { 
+    let tableau: Tableau;
+    let card1: Card;
+    let card2: Card;
+    let card3: Card;
+    beforeEach(() => {
         tableau = new Tableau(1, []);
       });
-    afterEach(() => { 
+    afterEach(() => {
         tableau = null;
       });
     it('should create an instance', () => {
@@ -19,7 +19,7 @@ describe('Tableau', () => {
     });
     it('should be empty', () => {
         expect(tableau.empty()).toBeTruthy();
-    }); 
+    });
     it('should take and return a card', () => {
         card1 = new Card(Rank.TWO, Suit.CLUBS, true);
         tableau.push(card1);

@@ -38,7 +38,7 @@ export class Waste {
     pop(): Card {
         return this._cards.pop();
     }
-    
+
     clear(): void {
         this._cards = [];
     }

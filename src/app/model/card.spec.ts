@@ -3,8 +3,8 @@ import { Rank } from './rank';
 import { Suit } from './suit';
 
 describe('Card', () => {
-  let card : Card;
-  afterEach(() => { 
+  let card: Card;
+  afterEach(() => {
     card = null;
   });
   it('should create an instance', () => {
@@ -12,22 +12,22 @@ describe('Card', () => {
   });
 
   it('diamonds shold be red', () => {
-    card = new Card(Rank.ACE, Suit.DIAMONDS)
+    card = new Card(Rank.ACE, Suit.DIAMONDS);
     expect(card.isRed()).toBeTruthy();
   });
 
   it('hearts shold be red', () => {
-    card = new Card(Rank.ACE, Suit.HEARTS)
+    card = new Card(Rank.ACE, Suit.HEARTS);
     expect(card.isRed()).toBeTruthy();
   });
 
   it('spades shold not be red', () => {
-    card = new Card(Rank.ACE, Suit.SPADES)
-    expect(card.isRed()).toBeFalsy();  
+    card = new Card(Rank.ACE, Suit.SPADES);
+    expect(card.isRed()).toBeFalsy();
   });
 
   it('clubs shold not be red', () => {
-    card = new Card(Rank.ACE, Suit.CLUBS)
-    expect(card.isRed()).toBeFalsy();  
+    card = new Card(Rank.ACE, Suit.CLUBS);
+    expect(card.isRed()).toBeFalsy();
   });
 });

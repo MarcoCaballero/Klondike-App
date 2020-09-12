@@ -38,4 +38,4 @@ export const TESTING_MODULE_METADATA: TestModuleMetadata = {
         {provide: APP_BASE_HREF, useValue: '/'},
         AppComponent
       ]
-}
+};

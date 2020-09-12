@@ -44,8 +44,8 @@ export class BoardComponent {
   private _isReady: boolean;
 
   constructor(private _startService: StartService,
-    private _gameService: GameService,
-    private _moveCardService: MoveCardService) {
+              private _gameService: GameService,
+              private _moveCardService: MoveCardService) {
     this._board = this._startService.buildBoard();
   }
 
@@ -78,14 +78,14 @@ export class BoardComponent {
 
   @HostListener('onCardPushed')
   onCardPushed(event: CdkDragDrop<Card[]>): void {
-    let card: Card = event.item.data;
-    let originContainerId: string = event.previousContainer.id;
-    let destinationContainerId: string = event.container.id;
-    let hasTableauDestination: boolean = this._gameService.isTableau(destinationContainerId);
+    const card: Card = event.item.data;
+    const originContainerId: string = event.previousContainer.id;
+    const destinationContainerId: string = event.container.id;
+    const hasTableauDestination: boolean = this._gameService.isTableau(destinationContainerId);
     if (this._gameService.isTableau(originContainerId)) {
-      let originTableauIdx: number = this._gameService.getTableauIdFromDragRefId(originContainerId);
+      const originTableauIdx: number = this._gameService.getTableauIdFromDragRefId(originContainerId);
       if (hasTableauDestination) {
-        let destinationTableauId: number = this._gameService.getTableauIdFromDragRefId(destinationContainerId);
+        const destinationTableauId: number = this._gameService.getTableauIdFromDragRefId(destinationContainerId);
         this._moveCardService.moveCardFromTableauToTableau(originTableauIdx, destinationTableauId, card);
       } else {
         this._moveCardService.moveCardFromTableauToFoundation(originTableauIdx, card.suit);
@@ -104,10 +104,10 @@ export class BoardComponent {
     if (this._gameService.isAllowedPushToFoundation(event.card)) {
       this._moveCardService.moveCardFromTableauToFoundation(event.tableau.idx, event.card.suit);
     } else {
-      let tableaus: Array<Tableau> = (event.card.rank == Rank.KING) ?
+      const tableaus: Array<Tableau> = (event.card.rank == Rank.KING) ?
         this._gameService.getEmptyTableaus().filter((tableau: Tableau) => tableau.idx != event.tableau.idx) : this._gameService.getAllowedToPushTableaus(event.card);
       if (tableaus.length > 0) {
-        this._moveCardService.moveCardFromTableauToTableau(event.tableau.idx, tableaus[0].idx, event.card)
+        this._moveCardService.moveCardFromTableauToTableau(event.tableau.idx, tableaus[0].idx, event.card);
       }
     }
   }
@@ -117,7 +117,7 @@ export class BoardComponent {
     if (this._gameService.isAllowedPushToFoundation(event.card)) {
       this._moveCardService.moveCardFromWasteToFoundation(event.card.suit);
     } else {
-      let tableaus: Array<Tableau> = (event.card.rank == Rank.KING) ? this._gameService.getEmptyTableaus() : this._gameService.getAllowedToPushTableaus(event.card);
+      const tableaus: Array<Tableau> = (event.card.rank == Rank.KING) ? this._gameService.getEmptyTableaus() : this._gameService.getAllowedToPushTableaus(event.card);
       if (tableaus.length > 0) {
         this._moveCardService.moveCardFromWasteToTableau(tableaus[0].idx);
       }

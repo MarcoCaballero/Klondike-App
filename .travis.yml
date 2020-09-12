@@ -17,5 +17,5 @@ before_script:
   - sleep 3
 
 script:
-  - npm run test
+  - ng test --watch=false
   - npm run e2e

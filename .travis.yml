@@ -19,4 +19,4 @@ before_script:
 script:
   - ng lint
   - ng test --watch=false
-  - npm run e2e
+  - npm run e2e --webdriverUpdate=fals

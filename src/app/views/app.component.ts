@@ -43,7 +43,7 @@ interface IconData {
     // End
     trigger('endGameAnimation', [
       state('down', style({
-        opacity: '100',
+        opacity: '1',
         'z-index': '100'
       })),
       state('up', style({
@@ -60,7 +60,7 @@ interface IconData {
     // Gme mode
     trigger('gameModeAnimation', [
       state('up', style({
-        opacity: '100',
+        opacity: '1',
         'z-index': '100'
       })),
       state('down', style({

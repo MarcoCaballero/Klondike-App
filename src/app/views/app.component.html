@@ -14,12 +14,10 @@
   (click)="onStart()">
   {{ isNewGameButtonShown ? 'New Game': 'Restart' }}</button>
 <button [@gameModeAnimation]="isNewGameButtonShown ? 'up': 'down'" mat-fab class="game-mode-button"
-  [ngClass]="{'easy': isOneModeEnabled(), 'hard': !isOneModeEnabled()}" (click)="onStart()">
+  [ngClass]="{'easy': isOneModeEnabled(), 'hard': !isOneModeEnabled()}">
   {{ isOneModeEnabled() ? 'One card': 'Three cards' }}</button>
 <button [@endGameAnimation]="isNewGameButtonShown ? 'up': 'down'" [disabled]="isNewGameButtonShown" mat-fab
   class="stop-button" (click)="onStop()">End</button>
-
-
 
 <mat-button-toggle-group *ngIf="isNewGameButtonShown" [(ngModel)]="selectedMode" name="fontStyle"
   aria-label="Font Style">

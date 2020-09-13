@@ -6,8 +6,8 @@ import { Rank } from 'app/model/rank';
 import { Suit } from 'app/model/suit';
 
 describe('CardComponent', () => {
-  let card_SUT: CardComponent;
-  let card_DOM_SUT: any;
+  let cardSut: CardComponent;
+  let cardDomSut: any;
   let fixture: ComponentFixture<CardComponent>;
 
   beforeEach(() => {
@@ -15,21 +15,21 @@ describe('CardComponent', () => {
       declarations: [CardComponent]
     }).compileComponents();
     fixture = TestBed.createComponent(CardComponent);
-    card_SUT = fixture.componentInstance;
-    card_SUT.card = new Card(Rank.ACE, Suit.HEARTS);
-    card_DOM_SUT = fixture.debugElement.nativeElement;
+    cardSut = fixture.componentInstance;
+    cardSut.card = new Card(Rank.ACE, Suit.HEARTS);
+    cardDomSut = fixture.debugElement.nativeElement;
     fixture.detectChanges();
   });
 
   it('should create card with back image', () => {
-    expect(card_SUT).toBeTruthy();
-    expect(card_DOM_SUT.querySelector('div').style.background).toContain('back.svg');
+    expect(cardSut).toBeTruthy();
+    expect(cardDomSut.querySelector('div').style.background).toContain('back.svg');
   });
 
   it('should show the proper image when card turns', () => {
-    card_SUT.card.show();
+    cardSut.card.show();
     fixture.detectChanges();
-    expect(card_DOM_SUT.querySelector('div').style.background).not.toContain('back.svg');
-    expect(card_DOM_SUT.querySelector('div').style.background).toBe(`url("../../../assets/cards/${Suit.HEARTS}/${Rank.ACE}.svg") no-repeat`);
+    expect(cardDomSut.querySelector('div').style.background).not.toContain('back.svg');
+    expect(cardDomSut.querySelector('div').style.background).toBe(`url("../../../assets/cards/${Suit.HEARTS}/${Rank.ACE}.svg") no-repeat`);
   });
 });

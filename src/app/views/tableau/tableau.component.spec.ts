@@ -9,19 +9,19 @@ import { TableauComponent } from './tableau.component';
 
 describe('TableauComponent', () => {
   let fixture: ComponentFixture<TableauComponent>;
-  let tableau_SUT: TableauComponent;
-  let tableau_DOM_SUT: any;
+  let tableauSut: TableauComponent;
+  let tableauDomSut: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule(TESTING_MODULE_METADATA).compileComponents();
     fixture = TestBed.createComponent(TableauComponent);
-    tableau_SUT = fixture.componentInstance;
-    tableau_SUT.tableau = new Tableau(1, [new Card(Rank.KING, Suit.CLUBS)]);
-    tableau_DOM_SUT = fixture.nativeElement;
+    tableauSut = fixture.componentInstance;
+    tableauSut.tableau = new Tableau(1, [new Card(Rank.KING, Suit.CLUBS)]);
+    tableauDomSut = fixture.nativeElement;
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(tableau_SUT).toBeTruthy();
+    expect(tableauSut).toBeTruthy();
   });
 });

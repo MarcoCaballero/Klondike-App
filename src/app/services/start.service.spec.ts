@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { StartService } from './start.service';
 import { Board } from '../model/board';
 import { GameMode } from 'app/model/game-mode';
+import { ALL_SUITS, Suit } from 'app/model/suit';
 
 describe('StartService', () => {
   let board: Board;
@@ -34,18 +35,19 @@ describe('StartService', () => {
     });
 
   it('should deal to all the tableaus', () => {
-    for (let n = 0; n < board._tableaus.length; n++) {
-      expect(board._tableaus[n].empty()).toBeFalsy();
+    for (const tableau of board._tableaus) {
+      expect(tableau.empty()).toBeFalsy();
     }
     });
 
   it('should build one empty foundation per suit', () => {
-    for (let n = 0; n < board._foundations.length; n++) {
-      for (let m = 0; m < board._foundations.length; m++) {
-        if (n !== m) {
-          expect(board._foundations[n].suit !== board._foundations[m].suit).toBeTruthy();
-        }
-      }
+
+    const sutSuitsSeen: Set<Suit> = new Set();
+
+    for (const foundation of board._foundations) {
+      sutSuitsSeen.add(foundation.suit);
     }
+
+    expect(sutSuitsSeen.size).toEqual(ALL_SUITS.length);
     });
 });

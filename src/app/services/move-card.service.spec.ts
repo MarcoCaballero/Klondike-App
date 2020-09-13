@@ -14,7 +14,6 @@ describe('MoveCardService', () => {
   let moveCardService: MoveCardService;
   let gameService: GameService;
   let board: Board;
-  let foundation: Foundation;
   let card: Card;
   beforeEach(() => {
     moveCardService = TestBed.get(MoveCardService);
@@ -54,7 +53,7 @@ describe('MoveCardService', () => {
 
     moveCardService.moveCardFromTableauToFoundation(tableauId, Suit.CLUBS);
 
-    foundation = board._foundations.filter(foundation => foundation.suit === Suit.CLUBS)[0];
+    const foundation: Foundation = board._foundations.filter(f => f.suit === Suit.CLUBS)[0];
     expect(foundation.isAllowedPush(new Card(Rank.TWO, Suit.CLUBS, true))).toBeTruthy();
   });
 
@@ -63,7 +62,7 @@ describe('MoveCardService', () => {
 
     moveCardService.moveCardFromWasteToFoundation(Suit.CLUBS);
 
-    foundation = board._foundations.filter(foundation => foundation.suit === Suit.CLUBS)[0];
+    const foundation: Foundation = board._foundations.filter(f => f.suit === Suit.CLUBS)[0];
     expect(foundation.isAllowedPush(new Card(Rank.TWO, Suit.CLUBS, true))).toBeTruthy();
   });
 
@@ -74,7 +73,7 @@ describe('MoveCardService', () => {
 
     moveCardService.moveCardFromWasteToTableau(tableauId);
 
-    const tableau: Tableau = board._tableaus.filter(tableau => tableau.idx === tableauId)[0];
+    const tableau: Tableau = board._tableaus.filter(t => t.idx === tableauId)[0];
     expect(tableau.pop() === card).toBeTruthy();
   });
 

@@ -111,7 +111,7 @@ export class AppComponent {
   }
 
   isOneModeEnabled(): boolean {
-    return this.selectedMode == GameMode.ONE_CARD_MODE;
+    return this.selectedMode === GameMode.ONE_CARD_MODE;
   }
 
   private updateTime(): void {

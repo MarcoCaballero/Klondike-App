@@ -24,7 +24,7 @@ export class Waste {
     }
 
     empty(): boolean {
-        return this.size() == 0;
+        return this.size() === 0;
     }
 
     size(): number {

@@ -1,5 +1,8 @@
-os: linux
+sudo: true
 dist: trusty
+
+services:
+  - docker
 
 addons:
   chrome: stable

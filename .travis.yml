@@ -32,17 +32,4 @@ jobs:
         - npm install
       script: npm run e2e-ci
     - stage: Release phase [docker build & release]
-      script:
-        - echo "Building image marcocab/Klondike-app:dev..." 
-        - docker build -t marcocab/Klondike-app:dev .
-        - echo "done." 
-        - echo "Building tag marcocab/Klondike-app:dev --> marcocab/Klondike-app:latest..." 
-        - docker tag marcocab/Klondike-app:dev marcocab/Klondike-app:latest
-        - echo "done." 
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin 
-        - echo "Push marcocab/Klondike-app:dev..." 
-        - docker push marcocab/Klondike-app:dev
-        - echo "done." 
-        - echo "Push marcocab/Klondike-app:latest..." 
-        - docker push marcocab/Klondike-app:latest
-        - echo "done." 
+      script: bash build.sh --release-ci

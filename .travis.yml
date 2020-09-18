@@ -13,23 +13,27 @@ cache:
      - ./node_modules
 jobs:
   include:
-    - stage: Testing phase [Lint, Unit, e2e]
+    - stage: Testing phase
+      name: Lint.
       language: node_js
       node_js: "12.3.1"
       before_script: 
         - npm install
       script: ng lint 
     - # stage name not required, parallel jobs
+      name: Unit testing
       language: node_js
       node_js: "12.3.1" 
       before_script: 
         - npm install
       script: npm run test-ci
     - # stage name not required, parallel jobs
+      name: End to end testing.
       language: node_js
       node_js: "12.3.1" 
       before_script: 
         - npm install
       script: npm run e2e-ci
-    - stage: Release phase [docker build & release]
+    - stage: Release phase
+      name: Docker release
       script: bash build.sh --release-ci

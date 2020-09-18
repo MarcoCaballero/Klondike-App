@@ -34,7 +34,7 @@ jobs:
     - stage: Release phase [docker build & release]
       script:
         - echo "Building image marcocab/Klondike-app:dev..." 
-        - docker build -t marcocab/Klondike-app:dev
+        - docker build -t marcocab/Klondike-app:dev .
         - echo "done." 
         - echo "Building tag marcocab/Klondike-app:dev --> marcocab/Klondike-app:latest..." 
         - docker tag marcocab/Klondike-app:dev marcocab/Klondike-app:latest

@@ -1,6 +1,10 @@
 os: linux
 dist: xenial
 
+language: ruby
+
+services: docker
+
 addons:
   chrome: stable
 
@@ -9,7 +13,7 @@ cache:
      - ./node_modules
 jobs:
   include:
-    - stage: Linting and Unit testing
+    - stage: Testing phase [Lint, Unit, e2e]
       language: node_js
       node_js: "12.3.1"
       before_script: 
@@ -27,3 +31,18 @@ jobs:
       before_script: 
         - npm install
       script: npm run e2e-ci
+    - stage: Release phase [docker build & release]
+      script:
+        - echo "Building image marcocab/Klondike-app:dev..." 
+        - docker build -t marcocab/Klondike-app:dev
+        - echo "done." 
+        - echo "Building tag marcocab/Klondike-app:dev --> marcocab/Klondike-app:latest..." 
+        - docker tag marcocab/Klondike-app:dev marcocab/Klondike-app:latest
+        - echo "done." 
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin 
+        - echo "Push marcocab/Klondike-app:dev..." 
+        - docker push marcocab/Klondike-app:dev
+        - echo "done." 
+        - echo "Push marcocab/Klondike-app:latest..." 
+        - docker push marcocab/Klondike-app:latest
+        - echo "done." 

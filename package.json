@@ -6,9 +6,11 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "test --with-assets": "http-server ./src/assets && ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "test-show-assets": "http-server ./src/assets && ng test",
+    "test-ci": "ng test --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "e2e-ci": "ng e2e --protractor-config=e2e/protractor-ci.conf.js"
   },
   "private": true,
   "dependencies": {

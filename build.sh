@@ -32,8 +32,7 @@ _deploy() {
     [ $? -ne 0 ] && echo "Ops! Something went wrong..." && exit 1
     
     echo "HELM DEPLOY\n"
-    local command="helm install helm --name $DEPLOYMENT_NAME \
-        --debug --wait -ns $NAMESPACE"
+    local command="helm install helm/ --name $DEPLOYMENT_NAME --debug --wait --namespace $NAMESPACE"
 
     echo "Command to run: $command"
     output=$(${command} 2>&1)

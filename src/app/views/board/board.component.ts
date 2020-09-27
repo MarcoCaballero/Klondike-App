@@ -80,7 +80,7 @@ export class BoardComponent {
   onFoundationCardPushed(event: CdkDragDrop<Card[]>): void {
     const card: Card = event.item.data;
     const originContainerId: string = event.previousContainer.id;
-  
+
     if (this._gameService.isTableau(originContainerId)) {
       const originTableauIdx: number = this._gameService.getTableauIdFromDragRefId(originContainerId);
       this._moveCardService.moveCardFromTableauToFoundation(originTableauIdx, card.suit);
@@ -88,13 +88,13 @@ export class BoardComponent {
       this._moveCardService.moveCardFromWasteToFoundation(card.suit);
     }
   }
-  
+
   @HostListener('onTableauCardPushed')
   onTableauCardPushed(event: CdkDragDrop<Card[]>): void {
     const card: Card = event.item.data;
     const originContainerId: string = event.previousContainer.id;
     const destinationContainerId: string = event.container.id;
-  
+
     if (this._gameService.isTableau(originContainerId)) {
       const originTableauIdx: number = this._gameService.getTableauIdFromDragRefId(originContainerId);
       const destinationTableauId: number = this._gameService.getTableauIdFromDragRefId(destinationContainerId);

@@ -37,8 +37,7 @@ export class StockComponent {
   _slideToWaste = false;
   _stock: Stock;
 
-  constructor(private _gameService: GameService) {
-  }
+  constructor() { }
 
   @Input()
   set stock(stock: Stock) {

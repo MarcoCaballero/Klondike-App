@@ -3,9 +3,8 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@ang
 import { Card } from 'app/model/card';
 import { Tableau } from 'app/model/tableau';
 import { DoubleClickOnTableauEvent } from 'app/views/events';
-import { DragDropService } from 'app/services/ui-utils/drag-drop.service';
+import { DragDropService } from 'app/services/drag-drop/drag-drop.service';
 import { BaseDragDropComponent } from '../base-drag-drop/base-drag-drop.component';
-import { MoveCardService } from 'app/services/move-card.service';
 
 @Component({
   selector: 'klondike-tableau',
@@ -26,9 +25,7 @@ export class TableauComponent extends BaseDragDropComponent implements OnInit {
 
   get idx(): number { return this._tableau.idx; }
 
-  constructor(public dragDropService: DragDropService,
-              private _moveCardService: MoveCardService,
-              private _elementDOM: ElementRef) {
+  constructor(public dragDropService: DragDropService) {
     super(dragDropService);
   }
 

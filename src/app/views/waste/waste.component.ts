@@ -2,7 +2,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Card } from 'app/model/card';
 import { Waste } from 'app/model/waste';
-import { DragDropService } from 'app/services/ui-utils/drag-drop.service';
+import { DragDropService } from 'app/services/drag-drop/drag-drop.service';
 import { DoubleClickOnWasteEvent } from 'app/views/events';
 import { BaseDragDropComponent } from '../base-drag-drop/base-drag-drop.component';
 

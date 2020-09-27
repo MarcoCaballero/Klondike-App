@@ -12,6 +12,7 @@ import { GameMode } from '../model/game-mode';
 export class GameService {
 
     readonly TABLEAU_REGEXP: RegExp = /(tableau)-(\d)-(dropList)/;
+    readonly FOUNDATION_REGEXP: RegExp = /(foundation)-([clubs | diamonds | hearts | spades])-(dropList)/;
     private _board: Board;
 
     constructor(private _startService: StartService) {
@@ -35,6 +36,14 @@ export class GameService {
 
     isTableau(idx: string): boolean {
         return this.TABLEAU_REGEXP.test(idx);
+    }
+
+    getFoundationIdFromDragRefId(dragRefId: string): string {
+        return dragRefId.replace(this.FOUNDATION_REGEXP, '$2');
+    }
+
+    isFoundation(idx: string): boolean {
+        return this.FOUNDATION_REGEXP.test(idx);
     }
 
     isAllowedPushToFoundation(card: Card): boolean {

@@ -6,7 +6,7 @@
         <klondike-stock (newCardClick)="onNewCardClicked()" (emptyStockClick)="onEmptyStockClicked()" [stock]="stock"></klondike-stock>
         <klondike-waste [waste]="waste" (doubleClicked)="onWasteDoubleClicked($event)"></klondike-waste>
 
-        <klondike-foundation *ngFor="let foundation of foundations" (cardPush)="onCardPushed($event)" [foundation]="foundation">
+        <klondike-foundation *ngFor="let foundation of foundations" (cardPush)="onFoundationCardPushed($event)" [foundation]="foundation">
         </klondike-foundation>
         <!-- ./TOP BAR -->
       </main>
@@ -17,7 +17,7 @@
       <main class="flex-container-item main-board">
         <!-- MAIN BOARD -->
 
-        <klondike-tableau *ngFor="let tableau of tableaus" (cardPush)="onCardPushed($event)" (doubleClicked)="onTableauDoubleClicked($event)" [tableau]="tableau"></klondike-tableau>
+        <klondike-tableau *ngFor="let tableau of tableaus" (cardPush)="onTableauCardPushed($event)" (doubleClicked)="onTableauDoubleClicked($event)" [tableau]="tableau"></klondike-tableau>
 
         <!--./ MAIN BOARD -->
       </main>

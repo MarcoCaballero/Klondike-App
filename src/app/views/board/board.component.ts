@@ -76,26 +76,31 @@ export class BoardComponent {
     this._gameService.restoreStock();
   }
 
-  @HostListener('onCardPushed')
-  onCardPushed(event: CdkDragDrop<Card[]>): void {
+  @HostListener('onFoundationCardPushed')
+  onFoundationCardPushed(event: CdkDragDrop<Card[]>): void {
+    const card: Card = event.item.data;
+    const originContainerId: string = event.previousContainer.id;
+  
+    if (this._gameService.isTableau(originContainerId)) {
+      const originTableauIdx: number = this._gameService.getTableauIdFromDragRefId(originContainerId);
+      this._moveCardService.moveCardFromTableauToFoundation(originTableauIdx, card.suit);
+    } else { // Is from Waste
+      this._moveCardService.moveCardFromWasteToFoundation(card.suit);
+    }
+  }
+  
+  @HostListener('onTableauCardPushed')
+  onTableauCardPushed(event: CdkDragDrop<Card[]>): void {
     const card: Card = event.item.data;
     const originContainerId: string = event.previousContainer.id;
     const destinationContainerId: string = event.container.id;
-    const hasTableauDestination: boolean = this._gameService.isTableau(destinationContainerId);
+  
     if (this._gameService.isTableau(originContainerId)) {
       const originTableauIdx: number = this._gameService.getTableauIdFromDragRefId(originContainerId);
-      if (hasTableauDestination) {
-        const destinationTableauId: number = this._gameService.getTableauIdFromDragRefId(destinationContainerId);
-        this._moveCardService.moveCardFromTableauToTableau(originTableauIdx, destinationTableauId, card);
-      } else {
-        this._moveCardService.moveCardFromTableauToFoundation(originTableauIdx, card.suit);
-      }
+      const destinationTableauId: number = this._gameService.getTableauIdFromDragRefId(destinationContainerId);
+      this._moveCardService.moveCardFromTableauToTableau(originTableauIdx, destinationTableauId, card);
     } else { // Is from Waste
-      if (hasTableauDestination) {
-        this._moveCardService.moveCardFromWasteToTableau(this._gameService.getTableauIdFromDragRefId(destinationContainerId));
-      } else {
-        this._moveCardService.moveCardFromWasteToFoundation(card.suit);
-      }
+      this._moveCardService.moveCardFromWasteToTableau(this._gameService.getTableauIdFromDragRefId(destinationContainerId));
     }
   }
 
@@ -119,7 +124,7 @@ export class BoardComponent {
       this._moveCardService.moveCardFromWasteToFoundation(event.card.suit);
     } else {
       const tableaus: Array<Tableau> = (event.card.rank === Rank.KING) ? this._gameService.getEmptyTableaus() :
-       this._gameService.getAllowedToPushTableaus(event.card);
+      this._gameService.getAllowedToPushTableaus(event.card);
       if (tableaus.length > 0) {
         this._moveCardService.moveCardFromWasteToTableau(tableaus[0].idx);
       }

@@ -97,6 +97,9 @@ export class AppComponent {
   }
 
   onStart(): void {
+    if (this.isRestart()) {
+      this.onStop();
+    }
     this.hideNewGameButton();
     this.setGameTimer();
     this._startService.start(GetGameMode(this.selectedMode));
@@ -144,13 +147,17 @@ export class AppComponent {
   private setGameTimer(): void {
     this.millisFromStart = 0;
     this.timer = setInterval(() => {
-      this.millisFromStart += 100;
+      this.millisFromStart += 1000;
       this.updateTime();
-    }, 100);
+    }, 1000);
   }
 
   private resetGameTimer(): void {
     this.millisFromStart = 0;
+  }
+
+  private isRestart(): boolean {
+    return !this.isNewGameButtonShown;
   }
 
 }

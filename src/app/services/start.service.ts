@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Board } from '../model/board';
-import { Stock } from '../model/stock';
-import { Tableau } from '../model/tableau';
-import { Card } from '../model/card';
 import { GameMode } from '../model/game-mode';
 
 @Injectable({

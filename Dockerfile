@@ -14,7 +14,7 @@ RUN cp -f ./src/fixes/drag-drop.es5* ./node_modules/@angular/cdk/esm5 && \
 
 RUN $(npm bin)/ng build --prod
 
-FROM nginx
+FROM nginx:1.18.0
 
 COPY nginx/default.conf /etc/nginx/conf.d/
 
